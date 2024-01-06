@@ -1,6 +1,8 @@
 from pathlib import Path
+
 from torchvision import transforms
 from PIL import Image
+import json
 
 import torch
 
@@ -39,7 +41,7 @@ def load_image(image_path):
     return image_tensor
 
 
-def build_dataset(mode="training"):
+def build_dataset(mode="train"):
     """
     Build a PyTorch dataset from a given directory.
 
@@ -55,13 +57,16 @@ def build_dataset(mode="training"):
     # intialise Tensor for storing images
     images = torch.Tensor().type(torch.float32)
     targets = torch.Tensor().type(torch.int32)
-    for i, class_dir in enumerate(raw_data_dir.iterdir()):
-        print(class_dir)
+    class_dictionary = get_class_dictionary()
+
+    for i, class_name in class_dictionary.items():
+        print(i, class_name)
+        class_dir = raw_data_dir / class_name
         for image_path in class_dir.iterdir():
             image = load_image(image_path)
             resize = transforms.Resize(IMG_DIM, antialias=True)
             image = resize(image)
-            target = torch.Tensor([i])
+            target = torch.Tensor([i]).type(torch.int32)
             images = torch.cat([images, image])
             targets = torch.cat([targets, target])
 
@@ -70,15 +75,40 @@ def build_dataset(mode="training"):
     return dataset
 
 
+def get_class_dictionary():
+    raw_data_dir = DATA_PATH / "raw" / "train"
+    classes = [f for f in sorted(raw_data_dir.iterdir()) if not f.name.startswith(".")]
+    class_dictionary = {i: p.name for i, p in enumerate(classes)}
+    return class_dictionary
+
+
 if __name__ == "__main__":
-    train_dataset = build_dataset(mode="training")
-    test_dataset = build_dataset(mode="testing")
-    # print shape
-    print(train_dataset.tensors[0].shape)
-    print(train_dataset.tensors[1].shape)
-    print(test_dataset.tensors[0].shape)
-    print(test_dataset.tensors[1].shape)
+    # build datasets
+    train_dataset = build_dataset(mode="train")
+    valid_dataset = build_dataset(mode="valid")
+    test_dataset = build_dataset(mode="test")
 
     # save dataset
     torch.save(train_dataset, DATA_PATH / "processed" / "train.pt")
+    torch.save(valid_dataset, DATA_PATH / "processed" / "valid.pt")
     torch.save(test_dataset, DATA_PATH / "processed" / "test.pt")
+
+    # save class dictionary as json
+    class_dictionary = get_class_dictionary()
+    with open(DATA_PATH / "processed" / "class_dictionary.json", "w") as f:
+        json.dump(class_dictionary, f)
+
+    # print shape
+    # print(train_dataset.tensors[0].shape)
+    # print(train_dataset.tensors[1].shape)
+    # print(valid_dataset.tensors[0].shape)
+    # print(valid_dataset.tensors[1].shape)
+    # print(test_dataset.tensors[0].shape)
+    # print(test_dataset.tensors[1].shape)
+
+    # plot some images
+    # fig, ax = plt.subplots(1, 4)
+    # for i in range(4):
+    #     ax[i].imshow(train_dataset.tensors[0][i].squeeze(), cmap="gray")
+    #     ax[i].set_title(f"Label: {train_dataset.tensors[1][i]}")
+    # plt.show()
