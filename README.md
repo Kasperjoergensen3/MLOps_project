@@ -7,20 +7,18 @@ Kasper Jørgensen s204231
 
 ### Project goal
 
-The overall goal of this project is to apply the methods we have learned in class to create an agile and reproducable DL project.
-
-### DL model
-
-We will demonstrate the use of these methods by finetuning a pretrained image-transformer model to classify different types of brain tumors (or non brain-tumors) based on MRI images. 
+The overall goal of this project, for group MLOps29, is to apply the methods we have learned in class to create an agile and reproducable DL project. Specifically we want to classify between 4 classes of brain tumors - pituitary, glioma, meningioma and no-tumor. This will be done using the dataset of MRI images of brains described below. Using this dataset we will finetune a pre-trained image-transformer model to classify these 3 different types of brain tumors and no-tumors. 
 
 ### Framework 
 
-For the project we will use a pretrained model from [Huggingface-Transformers](https://huggingface.co/docs/transformers/index) and finetune it for our classification task.
+For the project we will use a pre-trained model from [Huggingface-Transformers](https://huggingface.co/docs/transformers/index) and finetune it for our classification task.
 
 ### Data
 
-We use the dataset [MRI-Images-of-Brain-Tumor](https://huggingface.co/datasets/PranomVignesh/MRI-Images-of-Brain-Tumor) which is a HuggingFace Dataset and therefore it is allready split into a training set with 3760 images, a validation set with 1070 images and a test set with 537 images.
+We use the dataset [MRI-Images-of-Brain-Tumor](https://huggingface.co/datasets/PranomVignesh/MRI-Images-of-Brain-Tumor) which is a HuggingFace Dataset and therefore it is already split into a training set with 3760 images, a validation set with 1070 images and a test set with 537 images.
 
+### Models
+We intend to perform an image classification task on the MRI brain images data using transformers. The models we will use from the Transformers framework are yet to be determined but possible options are BEiT, Conditional DETR and Swin Transformer.
 
 ### Project flowchart
 
