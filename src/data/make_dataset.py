@@ -10,7 +10,7 @@ from matplotlib import pyplot as plt
 
 
 DATA_PATH = Path(__file__).resolve().parents[2] / "data"
-IMG_DIM = (256, 256)
+IMG_DIM = (224, 224)
 
 
 def load_image(image_path):
