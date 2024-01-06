@@ -40,6 +40,11 @@ clean:
 data:
 	python src/data/make_dataset.py
 
+
+visualize:
+	python src/visualizations/visualize.py
+
+
 #################################################################################
 # Documentation RULES                                                           #
 #################################################################################

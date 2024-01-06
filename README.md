@@ -15,7 +15,10 @@ For the project we will use a pre-trained model from [Huggingface-Transformers](
 
 ### Data
 
-We use the dataset [MRI-Images-of-Brain-Tumor](https://huggingface.co/datasets/PranomVignesh/MRI-Images-of-Brain-Tumor) which is a HuggingFace Dataset and therefore it is already split into a training set with 3760 images, a validation set with 1070 images and a test set with 537 images. All images are greyscale and 256x256 pixels.
+We use the dataset [MRI-Images-of-Brain-Tumor](https://huggingface.co/datasets/PranomVignesh/MRI-Images-of-Brain-Tumor) which is a HuggingFace Dataset and therefore it is already split into a training set with 3760 images, a validation set with 1070 images and a test set with 537 images. All images are greyscale and 224x224 pixels. Some example images are present below:
+
+![Example Image](reports/figures/example_images.png)
+
 
 ### Models
 We intend to perform an image classification task on the MRI brain images data using transformers. The models we will use from the Transformers framework are yet to be determined but possible options are BEiT, Conditional DETR and Swin Transformer.
