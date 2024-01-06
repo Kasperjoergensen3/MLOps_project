@@ -1,46 +1,25 @@
-# make template for pytorch lightning model
-
-import pytorch_lightning as pl
-import torch
-import torch.nn as nn
+from torch import nn
 import torch.nn.functional as F
-from torch.utils.data import DataLoader
+from transformers import AutoImageProcessor, BeitForImageClassification
+import torch
 
+class BEiT(nn.Module):
+    def __init__(self, image_processor, model):
+        super(BEiT, self).__init__()
+        self.image_processor = image_processor
+        self.model = model
 
-class Model(pl.LightningModule):
-    def __init__(self, hparams):
-        super(Model, self).__init__()
-        self.hparams = hparams
-
-        # define model layers
-        self.layer_1 = nn.Linear(28 * 28, 128)
-        self.layer_2 = nn.Linear(128, 256)
-        self.layer_3 = nn.Linear(256, 10)
-
-    def forward(self, x):
-        # forward pass
-        batch_size, channels, width, height = x.size()
-
-        x = x.view(batch_size, -1)
-        x = self.layer_1(x)
-        x = F.relu(x)
-        x = self.layer_2(x)
-        x = F.relu(x)
-        x = self.layer_3(x)
-
-        x = F.log_softmax(x, dim=1)
+    def forward(self, image):
+        inputs = self.image_processor(image, return_tensors="pt")
+        with torch.no_grad():
+            logits = self.model(**inputs).logits
+        x = F.log_softmax(logits, dim=1)
         return x
 
-    def training_step(self, batch, batch_idx):
-        # training step
-        x, y = batch
-        y_hat = self.forward(x)
-        loss = F.nll_loss(y_hat, y)
-        return loss
 
-    def validation_step(self, batch, batch_idx):
-        # validation step
-        x, y = batch
-        y_hat = self.forward(x)
-        loss = F.nll_loss(y_hat, y)
-        return loss
+def load_pretrained(filepath):
+    base_patch = "microsoft/beit-base-patch16-224"
+    image_processor = AutoImageProcessor.from_pretrained(base_patch)
+    model = BeitForImageClassification.from_pretrained(base_patch)
+    my_model = BEiT(image_processor, model)
+    return my_model

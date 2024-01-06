@@ -1,6 +1,30 @@
-# MLOps_project
+# MLOps_project - Brain-tumor classification with transformers using MRI images
 
-for MLOps course at DTU
+Alexander Samuel Bendix Gosden s204209
+Asger Valbjørn Schødt s233472
+Jonatan Hauge Steffensen s230368
+Kasper Jørgensen s204231
+
+### Project goal
+
+The overall goal of this project is to apply the methods we have learned in class to create an agile and reproducable DL project.
+
+### DL model
+
+We will demonstrate the use of these methods by finetuning a pretrained image-transformer model to classify different types of brain tumors (or non brain-tumors) based on MRI images. 
+
+### Framework 
+
+For the project we will use a pretrained model from [Huggingface-Transformers](https://huggingface.co/docs/transformers/index) and finetune it for our classification task.
+
+### Data
+
+We use the dataset [MRI-Images-of-Brain-Tumor](https://huggingface.co/datasets/PranomVignesh/MRI-Images-of-Brain-Tumor) which is a HuggingFace Dataset and therefore it is allready split into a training set with 3760 images, a validation set with 1070 images and a test set with 537 images.
+
+
+### Project flowchart
+
+!!Insert nice image of the operations-flowchart of our project!!
 
 ## Project structure
 
