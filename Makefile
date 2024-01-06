@@ -45,6 +45,12 @@ visualize:
 	python src/visualizations/visualize.py
 
 
+
+model = "ViT"
+train:
+	python src/train.py model=$(model)
+
+
 #################################################################################
 # Documentation RULES                                                           #
 #################################################################################

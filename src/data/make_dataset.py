@@ -56,7 +56,7 @@ def build_dataset(mode="train"):
 
     # intialise Tensor for storing images
     images = torch.Tensor().type(torch.float32)
-    targets = torch.Tensor().type(torch.int32)
+    targets = torch.Tensor().type(torch.long)
     class_dictionary = get_class_dictionary()
 
     for i, class_name in class_dictionary.items():
@@ -66,7 +66,7 @@ def build_dataset(mode="train"):
             image = load_image(image_path)
             resize = transforms.Resize(IMG_DIM, antialias=True)
             image = resize(image)
-            target = torch.Tensor([i]).type(torch.int32)
+            target = torch.Tensor([i]).type(torch.long)
             images = torch.cat([images, image])
             targets = torch.cat([targets, target])
 
