@@ -1,0 +1,4 @@
+# @package _group_
+name: "BEiT"
+num_classes: 4
+in_channels: 1

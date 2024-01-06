@@ -1,0 +1,10 @@
+# @package _group_
+data_path: "../../../data/processed"
+lr: 0.0001
+max_epochs: 10
+batch_size: 32
+loss: "NLLLoss"
+optimizer: "Adam"
+wandb: True
+checkpoint_callback: True
+early_stopping_callback: True
