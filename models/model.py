@@ -2,7 +2,6 @@ from torch import nn
 import torch.nn.functional as F
 from transformers import AutoImageProcessor, BeitForImageClassification
 import torch
-from datasets import load_dataset
 
 class BEiT(nn.Module):
     def __init__(self, image_processor, model):
