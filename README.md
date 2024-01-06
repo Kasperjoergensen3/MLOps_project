@@ -1,9 +1,9 @@
 # MLOps_project - Brain-tumor classification with transformers using MRI images
 
-Alexander Samuel Bendix Gosden sxxyyzz
-Asger Valbjørn Schødt sxxyyzz
+Alexander Samuel Bendix Gosden s204209
+Asger Valbjørn Schødt s233472
 Jonatan Hauge Steffensen s230368
-Kasper Jørgensen sxxyyzz
+Kasper Jørgensen s204231
 
 ### Project goal
 
