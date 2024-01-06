@@ -19,6 +19,14 @@ We use the dataset [MRI-Images-of-Brain-Tumor](https://huggingface.co/datasets/P
 
 ![Example Image](reports/figures/example_images.png)
 
+### Get Started
+Get setup with both code and data by simply running
+```sh
+git clone https://github.com/Kasperjoergensen3/MLOps_project.git
+cd MLOps_project
+dvc pull
+```
+
 
 ### Models
 We intend to perform an image classification task on the MRI brain images data using transformers. The models we will use from the Transformers framework are yet to be determined but possible options are BEiT, Conditional DETR and Swin Transformer.
