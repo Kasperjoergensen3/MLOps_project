@@ -25,3 +25,21 @@ dev = {file = ['requirements_dev.txt']}
 
 [tool.ruff]
 line-length = 120
+
+[tool.coverage.run]
+omit = [
+  "*/tests/*",
+  "*/test_*",
+  "*/setup.py",
+  "*/__main__.py",
+  "*/__init__.py",
+  "*/__about__.py",
+  "*/__version__.py",
+  "*/_version.py",
+  "*/version.py",
+  "*/conftest.py",
+  "*/conf.py",
+  "*/setup.cfg",
+  "*/setup_helpers.py",
+  "*/setup_helpers."
+  ]
