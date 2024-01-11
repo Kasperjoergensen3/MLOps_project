@@ -17,10 +17,10 @@ class CustomDataModule(pl.LightningDataModule):
             self.val_dataset = torch.load(self.data_path / "valid.pt")
             if self.quick_test:
                 self.train_dataset = torch.utils.data.Subset(
-                    self.train_dataset, range(0, 10)
+                    self.train_dataset, torch.randint(0, len(self.train_dataset), (10,))
                 )
                 self.val_dataset = torch.utils.data.Subset(
-                    self.val_dataset, range(0, 10)
+                    self.val_dataset, torch.randint(0, len(self.val_dataset), (10,))
                 )
 
         if stage == "test" or stage is None:
@@ -32,15 +32,15 @@ class CustomDataModule(pl.LightningDataModule):
 
     def train_dataloader(self):
         # Return the dataloader for training
-        return DataLoader(self.train_dataset, batch_size=self.batch_size)
+        return DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True)
 
     def val_dataloader(self):
         # Return the dataloader for validation
-        return DataLoader(self.val_dataset, batch_size=self.batch_size)
+        return DataLoader(self.val_dataset, batch_size=self.batch_size, shuffle=True)
 
     def test_dataloader(self):
         # Return the dataloader for testing
-        return DataLoader(self.test_dataset, batch_size=self.batch_size)
+        return DataLoader(self.test_dataset, batch_size=self.batch_size, shuffle=True)
 
 
 if __name__ == "__main__":

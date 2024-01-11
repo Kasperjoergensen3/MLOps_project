@@ -13,7 +13,7 @@ from src.utilities.modules import recursive_find_python_class
 def train(config):
     # init datamodule
     if config.trainer.quick_test:
-        config.trainer.max_epochs = 2
+        config.trainer.max_epochs = 5
 
     dm = CustomDataModule(config)
 
@@ -23,8 +23,9 @@ def train(config):
 
     # init logger
     if config.trainer.wandb:
+        run_name = f"{config.model.name}_{config.trainer.optimizer}_{config.trainer.lr}_loss_{config.trainer.loss}"
         logger = WandbLogger(
-            project="MLOps_project", entity="mlops_team29"
+            project="MLOps_project", entity="mlops_team29", name=run_name
         )
     else:
         logger = None
