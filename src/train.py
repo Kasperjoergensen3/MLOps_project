@@ -9,9 +9,11 @@ from pytorch_lightning.loggers import WandbLogger
 from src.utilities.modules import recursive_find_python_class
 
 
-@hydra.main(version_base = None, config_path="conf", config_name="default_config.yaml")
+@hydra.main(config_path="conf", config_name="default_config.yaml")
 def train(config):
     # init datamodule
+    if config.trainer.quick_test:
+        config.trainer.max_epochs = 2
 
     dm = CustomDataModule(config)
 
