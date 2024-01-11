@@ -1,0 +1,11 @@
+# sweep_config.yaml
+name: my-awesome-sweep
+method: grid
+metric:
+  name: val_loss
+  goal: minimize
+parameters:
+  lr:
+    values: [0.001, 0.0001]
+  optimizer:
+    values: ["adam", "sgd"]
