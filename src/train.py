@@ -22,7 +22,7 @@ def train(config):
     # init logger
     if config.trainer.wandb:
         logger = WandbLogger(
-            project="MLOps_project", entity="mlops_team29", name="test_run"
+            project="MLOps_project", entity="mlops_team29"
         )
     else:
         logger = None
