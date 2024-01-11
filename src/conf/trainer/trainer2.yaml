@@ -1,4 +1,4 @@
-# @package _group_
+# @ trainer
 data_path: "../../../data/processed"
 lr: 0.001
 max_epochs: 5
