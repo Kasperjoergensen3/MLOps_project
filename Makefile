@@ -45,10 +45,11 @@ visualize:
 	python src/visualizations/visualize.py
 
 
-
+trainer = "trainer"
 model = "ViT"
+quick_test = "True"
 train:
-	python src/train.py model=$(model)
+	python src/train.py model=$(model) trainer=$(trainer) trainer.quick_test=$(quick_test)
 
 
 #################################################################################
