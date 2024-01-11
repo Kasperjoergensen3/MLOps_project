@@ -48,8 +48,16 @@ visualize:
 trainer = "trainer"
 model = "ViT"
 quick_test = "True"
+
 train:
 	python src/train.py model=$(model) trainer=$(trainer) trainer.quick_test=$(quick_test)
+
+
+output_dir = "outputs/2024-01-11/09-54-44"
+checkpoint = "best-checkpoint.ckpt"
+predict:
+	python src/predict_model.py --output_dir=$(output_dir) --checkpoint=$(checkpoint)
+
 
 sweep:
 	python src/sweep.py

@@ -9,7 +9,7 @@ from pytorch_lightning.loggers import WandbLogger
 from src.utilities.modules import recursive_find_python_class
 
 
-@hydra.main(version_base = None, config_path="conf", config_name="default_config.yaml")
+@hydra.main(version_base=None, config_path="conf", config_name="default_config.yaml")
 def train(config):
     # init datamodule
 
@@ -60,12 +60,9 @@ def train(config):
 
     trainer.fit(model, dm)
 
-    #save model final model 
-    model.save_model('checkpoints/final_model.ckpt')
-
-
-
+    # save model final model
+    model.save_model("checkpoints/final_model.ckpt")
 
 
 if __name__ == "__main__":
-    
+    train()
