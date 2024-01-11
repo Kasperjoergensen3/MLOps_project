@@ -9,3 +9,6 @@ parameters:
     values: [0.001, 0.0001]
   optimizer:
     values: ["adam"]
+### Add this to run on full dataset
+  #quick_test:
+  #  values: [False]
