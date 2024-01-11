@@ -9,14 +9,26 @@ class CustomDataModule(pl.LightningDataModule):
         super().__init__()
         self.batch_size = config.trainer["batch_size"]
         self.data_path = Path(config.trainer["data_path"])
+        self.quick_test = config.trainer["quick_test"]
 
     def setup(self, stage=None):
         if stage == "fit" or stage is None:
             self.train_dataset = torch.load(self.data_path / "train.pt")
             self.val_dataset = torch.load(self.data_path / "valid.pt")
+            if self.quick_test:
+                self.train_dataset = torch.utils.data.Subset(
+                    self.train_dataset, range(0, 10)
+                )
+                self.val_dataset = torch.utils.data.Subset(
+                    self.val_dataset, range(0, 10)
+                )
 
         if stage == "test" or stage is None:
             self.test_dataset = torch.load(self.data_path / "test.pt")
+            if self.quick_test:
+                self.test_dataset = torch.utils.data.Subset(
+                    self.test_dataset, range(0, 10)
+                )
 
     def train_dataloader(self):
         # Return the dataloader for training
