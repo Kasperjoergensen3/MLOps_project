@@ -7,11 +7,12 @@ RUN apt update && \
 
 COPY requirements.txt requirements.txt
 COPY pyproject.toml pyproject.toml
-COPY MLOps_project/ MLOps_project/
+COPY src/ src/
 COPY data/ data/
 
 WORKDIR /
 RUN pip install -r requirements.txt --no-cache-dir
 RUN pip install . --no-deps --no-cache-dir
+RUN pip install -e .
 
-ENTRYPOINT ["python", "-u", "MLOps_project/train_model.py"]
+ENTRYPOINT ["python", "-u", "src/train.py"]
