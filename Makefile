@@ -51,6 +51,9 @@ quick_test = "True"
 train:
 	python src/train.py model=$(model) trainer=$(trainer) trainer.quick_test=$(quick_test)
 
+sweep:
+	python src/sweep.py
+
 
 #################################################################################
 # Documentation RULES                                                           #
