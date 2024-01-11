@@ -60,6 +60,12 @@ def train(config):
 
     trainer.fit(model, dm)
 
+    #save model final model 
+    model.save_model('checkpoints/final_model.ckpt')
+
+
+
+
 
 if __name__ == "__main__":
-    train()
+    
