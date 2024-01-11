@@ -8,7 +8,7 @@ class CustomDataModule(pl.LightningDataModule):
     def __init__(self, config):
         super().__init__()
         self.batch_size = config.trainer["batch_size"]
-        self.data_path = Path("../../../" + config.trainer["data_path"])
+        self.data_path = Path(config.trainer["data_path"])
         self.quick_test = config.trainer["quick_test"]
 
     def setup(self, stage=None):

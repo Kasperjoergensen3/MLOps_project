@@ -49,7 +49,7 @@ def predict(model: torch.nn.Module, dataloader: pl.LightningDataModule) -> None:
 if __name__ == "__main__":
     # make agument parser
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output_dir", type=str, default="outputs/2024-01-11/09-54-44")
+    parser.add_argument("--output_dir", type=str, default="models/test_predict/")
     parser.add_argument("--checkpoint", type=str, default="best-checkpoint.ckpt")
     args = parser.parse_args()
 
