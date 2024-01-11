@@ -1,0 +1,3 @@
+defaults: 
+  - model: SimpleCNN
+  - trainer: simpleCNN_test_trainer
