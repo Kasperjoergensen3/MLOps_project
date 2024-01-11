@@ -1,4 +1,4 @@
-# @package _group_
+# @ model
 name: "SimpleCNN"
 num_classes: 4
 in_channels: 1
