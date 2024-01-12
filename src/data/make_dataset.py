@@ -41,7 +41,7 @@ def load_image(image_path):
     return image_tensor
 
 
-def build_dataset(mode="train"):
+def build_dataset(mode="train", max_samples_per_class = float("inf")):
     """
     Build a PyTorch dataset from a given directory.
 
@@ -52,6 +52,8 @@ def build_dataset(mode="train"):
     Returns:
     torch.utils.data.Dataset: The dataset.
     """
+    print(f"Building dataset with max_samples_per_class={max_samples_per_class}")
+
     raw_data_dir = DATA_PATH / "raw" / mode
 
     # intialise Tensor for storing images
@@ -60,15 +62,18 @@ def build_dataset(mode="train"):
     class_dictionary = get_class_dictionary()
 
     for i, class_name in class_dictionary.items():
-        print(i, class_name)
         class_dir = raw_data_dir / class_name
+        total_class_samples = 0
         for image_path in class_dir.iterdir():
+            if total_class_samples >= max_samples_per_class:
+                break
             image = load_image(image_path)
             resize = transforms.Resize(IMG_DIM, antialias=True)
             image = resize(image)
             target = torch.Tensor([i]).type(torch.long)
             images = torch.cat([images, image])
             targets = torch.cat([targets, target])
+            total_class_samples += 1
 
     dataset = torch.utils.data.TensorDataset(images, targets)
 
