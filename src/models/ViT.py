@@ -9,6 +9,7 @@ class ViT(pl.LightningModule):
     def __init__(self, config):
         super().__init__()
         self.config = config
+        print(config)
 
         # Load pretrained model
         self.ViT = ViTForImageClassification.from_pretrained(

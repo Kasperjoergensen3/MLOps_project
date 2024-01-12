@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Classification</title>
+</head>
+<body>
+    <h1>Upload an Image</h1>
+    <form id="upload-form">
+        <label for="model-select">Choose a model:</label>
+        <select id="model-select" name="model">
+            <option value="ViT">ViT</option>
+            <option value="SimpleCNN">SimpleCNN</option>
+        </select><br><br>
+
+        <input type="file" id="image-input" name="file" accept="image/*">
+        <input type="submit" value="Classify">
+    </form>
+    <h2 id="prediction"></h2>
+    <img id="display-image" src="" style="display: none;"/>
+
+    <script>
+    document.getElementById('upload-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('data', document.getElementById('image-input').files[0]);
+        formData.append('model', document.getElementById('model-select').value);
+
+        const response = await fetch('/inference/', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+        document.getElementById('prediction').textContent = 'Prediction: ' + result.prediction;
+        const displayImage = document.getElementById('display-image');
+        displayImage.src = 'data:image/jpeg;base64,' + result.image;
+        displayImage.style.display = 'block';
+    });
+    </script>
+</body>
+</html>
