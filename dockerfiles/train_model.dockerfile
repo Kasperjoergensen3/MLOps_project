@@ -12,7 +12,7 @@ COPY data.dvc data.dvc
 RUN dvc init --no-scm
 RUN dvc remote add -d storage gdrive://1OeoRM94MO_zklc4k_k2jDJ4BURYAnkks
 # Pull data using DVC
-RUN dvc pull
+RUN dvc pull --verbose
 
 
 COPY requirements.txt requirements.txt
