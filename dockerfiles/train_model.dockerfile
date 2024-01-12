@@ -6,8 +6,10 @@ RUN apt update && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 # Copy the Makefile and requirements file
-COPY Makefile .
-COPY requirements.txt .
+COPY requirements.txt requirements.txt
+COPY pyproject.toml pyproject.toml
+COPY src/ src/
+COPY Makefile Makefile
 
 # Install Python dependencies
 RUN make requirements
@@ -18,10 +20,6 @@ RUN dvc init --no-scm
 RUN dvc remote add -d storage gs://brain_tumor_mlops/
 # Pull data using DVC
 RUN dvc pull --verbose
-
-COPY requirements.txt requirements.txt
-COPY pyproject.toml pyproject.toml
-COPY src/ src/
 
 WORKDIR /
 
