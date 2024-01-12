@@ -6,10 +6,8 @@ RUN apt update && \
     apt clean && rm -rf /var/lib/apt/lists/*
 RUN pip install dvc
 
-# Initialize a Git repository
-RUN git init .
 # Initialize DVC
-RUN dvc init
+RUN dvc init --no-scm
 # Pull data using DVC
 RUN dvc pull
 
