@@ -1,20 +1,23 @@
 from fastapi import FastAPI
 from http import HTTPStatus
 from enum import Enum
-import re
-from pydantic import BaseModel
-from fastapi import HTTPException
-
+from fastapi import UploadFile, File, HTTPException
+from typing import Optional
+from pathlib import Path
+from src.utilities.modules import recursive_find_python_class
+from omegaconf import OmegaConf
+import torch
+import numpy as np
+from PIL import Image
+import io
+from fastapi.responses import HTMLResponse
+import base64
 
 class ItemEnum(Enum):
-    alexnet = "alexnet"
-    resnet = "resnet"
-    lenet = "lenet"
-
+    ViT = "ViT"
+    SimpleCNN = "SimpleCNN"
 
 app = FastAPI()
-database = {"username": [], "password": []}
-
 
 @app.get("/")
 def root():
@@ -25,81 +28,57 @@ def root():
     }
     return response
 
+@app.post("/inference/")
+async def inference(
+    data: UploadFile = File(...), model: Optional[ItemEnum] = ItemEnum.ViT
+):
+    """Run inference on image."""
+    if not data.content_type.startswith("image/"):
+        raise HTTPException(status_code=400, detail="File is not an image.")
+    model_path = Path("models/test_predict")
+    config_path = model_path.joinpath(".hydra", "config.yaml")
+    checkpoint_path = model_path.joinpath("checkpoints", "best-checkpoint.ckpt")
+    config = OmegaConf.load(config_path)
+    module = recursive_find_python_class(config.model.name)
+    model = module(config)
+    state_dict = torch.load(checkpoint_path)["state_dict"]
+    model.load_state_dict(state_dict)
+    model.eval() 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int):
-    return {"item_id": item_id}
+    image_data = await data.read()
+    image = Image.open(io.BytesIO(image_data))
+    image = image.convert("L")
+    image = image.resize((224, 224))
+    image_array = np.array(image).astype(np.float32) / 255.0
+    image_array = np.expand_dims(image_array, axis=0)
+    image_tensor = torch.tensor(image_array).unsqueeze(0)
 
+    classes = {0: "Class 0", 1: "Class 1", 2: "Class 2", 3: "Class 3", 4: "Class 4"}
 
-@app.get("/restric_items/{item_id}")
-def read_item(item_id: ItemEnum):
-    return {"item_id": item_id}
+    with torch.no_grad():
+        print(image_array.size)
+        logits = model(image_tensor)
+        ps = torch.exp(logits)
+        top_p, top_class = ps.topk(1, dim=1)
+        prediction = classes[top_class.item()]
 
-
-@app.get("/query_items")
-def read_item(item_id: int):
-    return {"item_id": item_id}
-
-
-@app.post("/login/")
-def login(username: str, password: str):
-    username_db = database["username"]
-    password_db = database["password"]
-    if username not in username_db and password not in password_db:
-        with open("database.csv", "a") as file:
-            file.write(f"{username}, {password} \n")
-        username_db.append(username)
-        password_db.append(password)
-    return "login saved"
-
-
-# get user name and password from database
-@app.get("/login_info/")
-def login():
-    return database
-
-
-class EmailDomain(BaseModel):
-    email: str
-    domain_match: str
-
-
-@app.get("/text_model/")
-def contains_email(data: EmailDomain):
-    regex = rf"\b[A-Za-z0-9._%+-]+@{data.domain_match}\.[A-Z|a-z]{{2,}}\b"
-    is_valid_email = re.fullmatch(regex, data.email) is not None
+    buffered = io.BytesIO()
+    image.save(buffered, format="JPEG")
+    img_str = base64.b64encode(buffered.getvalue()).decode()
+    # Create a HTML response
+    html_content = f"""
+    <html>
+        <body>
+            <h2>Prediction: {prediction}</h2>
+            <img src="data:image/jpeg;base64,{img_str}" />
+        </body>
+    </html>
+    """
 
     response = {
-        "input": data.email,
-        "message": HTTPStatus.OK.phrase,
-        "status-code": HTTPStatus.OK,
-        "is_email": is_valid_email,
+        "model": config.model.name,
+        "prediction": prediction
     }
-    return response
+  
+    return HTMLResponse(content=html_content)
 
-
-from fastapi import UploadFile, File
-from typing import Optional
-import cv2
-from fastapi.responses import FileResponse
-
-
-@app.post("/cv_model/")
-async def cv_model(
-    data: UploadFile = File(...), h: Optional[int] = 28, w: Optional[int] = 28
-):
-    with open("image.jpg", "wb") as image:
-        content = await data.read()
-        image.write(content)
-        image.close()
-
-    img = cv2.imread("image.jpg")
-    res = cv2.resize(img, (h, w))
-    cv2.imwrite("image_resize.jpg", res)
-
-    # response = {
-    #     "input": data,
-    #     "message": HTTPStatus.OK.phrase,
-    #     "status-code": HTTPStatus.OK,
-    # }
-    return FileResponse("image_resize.jpg")
