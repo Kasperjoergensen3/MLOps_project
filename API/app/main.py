@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException, Form
+from fastapi import FastAPI, UploadFile, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from pathlib import Path
 from enum import Enum
@@ -39,18 +39,20 @@ print("Model loaded in {} seconds".format(time() - start))
 
 @app.get("/", response_class=HTMLResponse)
 async def read_index():
-    with open("index.html", "r") as f:
+    with open("API/app/app.html", "r") as f:
         return f.read()
 
 @app.post("/inference/")
-async def inference(data: UploadFile = File(...), model_name: Optional[ItemEnum] = Form(ItemEnum.ViT)):
-    """Run inference on image."""
+async def inference(request: Request):
+    form_data = await request.form()
+    data = form_data["data"]
+    model_name = form_data["model"]
     if not data.content_type.startswith("image/"):
         raise HTTPException(status_code=400, detail="File is not an image.")
-    if model_name.value not in models:
+    if model_name not in models:
         raise HTTPException(status_code=500, detail="Model not loaded.")
     
-    model = models[model_name.value]
+    model = models[model_name]
 
     start = time()
     image_data = await data.read()
@@ -80,4 +82,4 @@ async def inference(data: UploadFile = File(...), model_name: Optional[ItemEnum]
     image.save(buffered, format="JPEG")
     img_base64 = base64.b64encode(buffered.getvalue()).decode()
 
-    return JSONResponse(content={"prediction": prediction, "image": img_base64})
+    return JSONResponse(content={"prediction": prediction, "image": img_base64, "model_name": model_name})

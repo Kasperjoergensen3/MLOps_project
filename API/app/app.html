@@ -16,6 +16,7 @@
         <input type="submit" value="Classify">
     </form>
     <h2 id="prediction"></h2>
+    <h2 id="model-name"></h2>
     <img id="display-image" src="" style="display: none;"/>
 
     <script>
@@ -32,6 +33,7 @@
 
         const result = await response.json();
         document.getElementById('prediction').textContent = 'Prediction: ' + result.prediction;
+        document.getElementById('model-name').textContent = 'Model: ' + result.model_name;
         const displayImage = document.getElementById('display-image');
         displayImage.src = 'data:image/jpeg;base64,' + result.image;
         displayImage.style.display = 'block';
