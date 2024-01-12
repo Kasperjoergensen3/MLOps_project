@@ -14,13 +14,11 @@ RUN dvc remote add -d storage gs://brain_tumor_mlops/
 # Pull data using DVC
 RUN dvc pull --verbose --no-run-cache
 
-
 COPY requirements.txt requirements.txt
 COPY pyproject.toml pyproject.toml
 COPY src/ src/
-COPY data/ data/
 
 WORKDIR /
 RUN make requirements
 
-ENTRYPOINT ["make", "train]
+ENTRYPOINT ["pytest"]
