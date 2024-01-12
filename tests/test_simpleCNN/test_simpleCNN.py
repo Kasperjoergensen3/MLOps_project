@@ -1,7 +1,10 @@
 import pytest
 import torch
-from hydra import initialize, compose
+from hydra import initialize, compose, initialize_config_dir
 from src.models.SimpleCNN import SimpleCNN 
+import os
+import hydra
+from tests import _NUM_CLASSES, _NUM_CHANNELS, _IMG_SIZE
 
 @pytest.fixture(scope="module")
 def simple_cnn_model():
@@ -9,6 +12,7 @@ def simple_cnn_model():
     Pytest fixture to initialize and return the SimpleCNN model.
     This fixture also asserts key configurations to ensure the model is initialized correctly.
     """
+    print("Current Working Directory:", os.getcwd())
     with initialize(config_path="conf", version_base=None):
         cfg = compose(config_name="simpleCNN_test_config")
 
@@ -17,8 +21,8 @@ def simple_cnn_model():
         assert "trainer" in cfg, "Trainer configuration not found in cfg"
 
         # Asserting specific configuration values
-        assert cfg.model.num_classes == 4, f"Expected 4 classes in model config, found {cfg.model.num_classes}"
-        assert cfg.model.in_channels == 1, f"Expected 1 input channel in model config, found {cfg.model.in_channels}"
+        assert cfg.model.num_classes == _NUM_CLASSES, f"Expected {_NUM_CLASSES} classes in model config, found {cfg.model.num_classes}"
+        assert cfg.model.in_channels == _NUM_CHANNELS, f"Expected {_NUM_CHANNELS} input channel(s) in model config, found {cfg.model.in_channels}"
 
         return SimpleCNN(cfg)
 
@@ -33,8 +37,8 @@ def sample_batch():
     """
     Pytest fixture to create and return a sample batch of data and labels.
     """
-    input_shape = (1, 1, 224, 224) 
-    num_classes = 4
+    input_shape = (1, 1, _IMG_SIZE, _IMG_SIZE) 
+    num_classes = _NUM_CHANNELS
     data = torch.rand(input_shape)
     labels = torch.randint(0, num_classes, (input_shape[0],))
     return data, labels
@@ -69,5 +73,5 @@ def test_forward_pass(simple_cnn_model, sample_batch):
     assert output is not None, "Forward pass returned None"
 
     # Check if the output shape is correct (batch_size, num_classes)
-    expected_shape = (data.shape[0], simple_cnn_model.config.model['num_classes'])
+    expected_shape = (data.shape[0], _NUM_CLASSES)
     assert output.shape == expected_shape, f"Output shape mismatch. Expected: {expected_shape}, Got: {output.shape}"

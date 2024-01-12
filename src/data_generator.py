@@ -17,7 +17,8 @@ class CustomDataModule(pl.LightningDataModule):
             self.val_dataset = torch.load(self.data_path / "valid.pt")
             if self.quick_test:
                 self.train_dataset = torch.utils.data.Subset(
-                    self.train_dataset, torch.randint(0, len(self.train_dataset), (10,))
+                    self.train_dataset,
+                    torch.randint(0, len(self.train_dataset), (10,)),
                 )
                 self.val_dataset = torch.utils.data.Subset(
                     self.val_dataset, torch.randint(0, len(self.val_dataset), (10,))

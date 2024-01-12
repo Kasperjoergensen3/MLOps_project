@@ -2,7 +2,7 @@ from pathlib import Path
 import random
 import pytest
 import torch
-from tests import _PATH_DATA_RAW
+from tests import _PATH_DATA_RAW, _NUM_CLASSES, _NUM_CHANNELS
 from src.data.make_dataset import load_image, build_dataset, IMG_DIM, get_class_dictionary
 import os
 
@@ -55,8 +55,8 @@ def count_images(raw_data_dir):
 
 @pytest.mark.skipif(not os.path.exists(_PATH_DATA_RAW), reason="Raw data dir not found")
 @pytest.mark.parametrize("mode", ["train", "valid", "test"])
-def test_build_dataset(mode):
-    dataset = build_dataset(mode=mode)
+def test_build_dataset(mode, max_samples_per_class=10):
+    dataset = build_dataset(mode=mode, max_samples_per_class=max_samples_per_class)
 
     # Check if the returned object is a PyTorch Dataset
     assert isinstance(dataset, torch.utils.data.TensorDataset)
@@ -66,7 +66,7 @@ def test_build_dataset(mode):
     image_count = count_images(raw_data_dir)
 
     # Check if the dataset size matches the number of images
-    assert len(dataset) == image_count
+    assert len(dataset) == min(image_count, max_samples_per_class*_NUM_CLASSES)
 
     #check the shape of images and targets
     if len(dataset) > 0:
