@@ -7,6 +7,7 @@ import hydra
 
 from pytorch_lightning.loggers import WandbLogger
 from src.utilities.modules import recursive_find_python_class
+from callbacks.plotting_callback import PlotLogger
 
 
 @hydra.main(config_path="conf", config_name="default_config.yaml")
@@ -55,6 +56,11 @@ def train(config):
             mode="min",
         )
         callbacks.append(early_stop_callback)
+
+    # plotting
+    # if config.trainer.plotting_callback:
+    #     plot_callback = PlotLogger(model, dm, config=config)
+    #     callbacks.append(plot_callback)
 
     trainer = pl.Trainer(
         max_epochs=config.trainer.max_epochs,
