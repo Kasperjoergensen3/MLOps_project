@@ -12,7 +12,7 @@ COPY data.dvc data.dvc
 RUN dvc init --no-scm
 RUN dvc remote add -d storage gs://brain_tumor_mlops/
 # Pull data using DVC
-RUN dvc pull --verbose --no-run-cache
+RUN dvc pull --verbose
 
 COPY requirements.txt requirements.txt
 COPY pyproject.toml pyproject.toml
