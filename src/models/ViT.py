@@ -53,10 +53,9 @@ class ViT(pl.LightningModule):
         loss = self.criterion(logits, y)
 
         # Compute accuracy
-        preds = torch.argmax(logits, dim=1)  # Get the predicted class
-        correct_count = torch.sum(preds == y)  # Count how many predictions were correct
-        accuracy = correct_count.float() / y.size(0)  # Calculate accuracy
-        print(accuracy)
+        preds = torch.argmax(logits, dim=1)
+        correct_count = torch.sum(preds == y)
+        accuracy = correct_count.float() / y.size(0)
         self.log("val_loss", loss, prog_bar=True)
         self.log("val_accuracy", accuracy, prog_bar=True)
         return {"val_loss": loss, "val_accuracy": accuracy}
