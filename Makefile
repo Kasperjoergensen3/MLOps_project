@@ -6,7 +6,7 @@
 
 PROJECT_NAME = MLOps_project
 PYTHON_VERSION = 3.11
-PYTHON_INTERPRETER = python
+PYTHON_INTERPRETER = $(shell command -v python3 || command -v python)
 
 #################################################################################
 # COMMANDS                                                                      #
@@ -38,11 +38,11 @@ clean:
 
 ## Process raw data into processed data
 data:
-	python src/data/make_dataset.py
+	$(PYTHON_INTERPRETER) src/data/make_dataset.py
 
 
 visualize:
-	python src/visualizations/visualize.py
+	$(PYTHON_INTERPRETER) src/visualizations/visualize.py
 
 
 trainer = "trainer"
@@ -50,17 +50,17 @@ model = "ViT"
 quick_test = "True"
 
 train:
-	python src/train.py model=$(model) trainer=$(trainer) trainer.quick_test=$(quick_test)
+	$(PYTHON_INTERPRETER) src/train.py model=$(model) trainer=$(trainer) trainer.quick_test=$(quick_test)
 
 
 output_dir = "models/test_predict/"
 checkpoint = "best-checkpoint.ckpt"
 predict:
-	python src/predict_model.py --output_dir=$(output_dir) --checkpoint=$(checkpoint)
+	$(PYTHON_INTERPRETER) src/predict_model.py --output_dir=$(output_dir) --checkpoint=$(checkpoint)
 
 
 sweep:
-	python src/sweep.py
+	$(PYTHON_INTERPRETER) src/sweep.py
 
 
 #################################################################################
