@@ -23,4 +23,4 @@ RUN dvc pull --verbose
 
 WORKDIR /
 
-ENTRYPOINT ["pytest"]
+ENTRYPOINT ["make", "train]
