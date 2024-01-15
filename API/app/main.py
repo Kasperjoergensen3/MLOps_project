@@ -58,7 +58,7 @@ async def inference(request: Request):
     start = time()
     image_data = await data.read()
     image = Image.open(io.BytesIO(image_data))
-    image = transform_image(image)
+    image_tensor = transform_image(image)
 
     print("Image loaded in {} seconds".format(time() - start))
 
