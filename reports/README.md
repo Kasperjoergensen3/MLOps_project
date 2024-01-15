@@ -105,7 +105,7 @@ end of the project.
 >
 > Answer:
 
---- question 1 fill here ---
+29
 
 ### Question 2
 > **Enter the study number for each member in the group**
@@ -116,7 +116,7 @@ end of the project.
 >
 > Answer:
 
---- question 2 fill here ---
+s230368, s204209, s233472, s204231
 
 ### Question 3
 > **What framework did you choose to work with and did it help you complete the project?**
@@ -129,7 +129,7 @@ end of the project.
 >
 > Answer:
 
---- question 3 fill here ---
+We used the third-party framework Huggingface in our project. From Huggingface we used the pre-trained vision transformer model ViT as a starting point and from that we fine-tuned the model to our brain-tumor classification task. 
 
 ## Coding environment
 
