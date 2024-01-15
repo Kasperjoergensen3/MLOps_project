@@ -4,7 +4,8 @@ from hydra import initialize, compose, initialize_config_dir
 from src.models.SimpleCNN import SimpleCNN 
 import os
 import hydra
-from tests import _NUM_CLASSES, _NUM_CHANNELS, _IMG_SIZE
+from tests import _NUM_CLASSES, _NUM_CHANNELS
+from src.data.make_dataset import IMG_SIZE
 
 @pytest.fixture(scope="module")
 def simple_cnn_model():
@@ -37,7 +38,7 @@ def sample_batch():
     """
     Pytest fixture to create and return a sample batch of data and labels.
     """
-    input_shape = (1, 1, _IMG_SIZE, _IMG_SIZE) 
+    input_shape = (1, 1, IMG_SIZE[0], IMG_SIZE[1]) 
     num_classes = _NUM_CHANNELS
     data = torch.rand(input_shape)
     labels = torch.randint(0, num_classes, (input_shape[0],))

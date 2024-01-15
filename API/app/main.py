@@ -12,6 +12,7 @@ from typing import Optional
 import io
 import base64
 from time import time
+from src.data.make_dataset import transform_image
 
 class ItemEnum(Enum):
     ViT = "ViT"
@@ -57,11 +58,7 @@ async def inference(request: Request):
     start = time()
     image_data = await data.read()
     image = Image.open(io.BytesIO(image_data))
-    image = image.convert("L")
-    image = image.resize((224, 224))
-    image_array = np.array(image).astype(np.float32) / 255.0
-    image_array = np.expand_dims(image_array, axis=0)
-    image_tensor = torch.tensor(image_array).unsqueeze(0)
+    image = transform_image(image)
 
     print("Image loaded in {} seconds".format(time() - start))
 
@@ -69,7 +66,7 @@ async def inference(request: Request):
 
     start = time()
     with torch.no_grad():
-        print(image_array.size)
+        print(image_tensor.size())
         logits = model(image_tensor)
         ps = torch.exp(logits)
         top_p, top_class = ps.topk(1, dim=1)
