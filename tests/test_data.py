@@ -3,8 +3,9 @@ import random
 import pytest
 import torch
 from tests import _PATH_DATA_RAW, _NUM_CLASSES, _NUM_CHANNELS
-from src.data.make_dataset import load_image, build_dataset, IMG_DIM, get_class_dictionary
+from src.data.make_dataset import transform_image, build_dataset, IMG_SIZE, get_class_dictionary
 import os
+from PIL import Image
 
 @pytest.mark.skipif(not os.path.exists(_PATH_DATA_RAW), reason="Raw data dir not found")
 @pytest.mark.parametrize("mode", ["train", "valid", "test"])
@@ -25,7 +26,8 @@ def test_load_image_on_random_files(mode):
                 random_image_path = random.choice(images)
 
                 # Load the image
-                image_tensor = load_image(str(random_image_path))
+                image = Image.open(str(random_image_path))
+                image_tensor = transform_image(image)
 
                 # Check if the image is loaded correctly
                 assert isinstance(image_tensor, torch.Tensor)
@@ -77,4 +79,4 @@ def test_build_dataset(mode, max_samples_per_class=10):
 
         # Make sure every image has been resized to the correct size
         for img in images:
-            assert img.shape[1:] == IMG_DIM  
+            assert img.shape[1:] == IMG_SIZE  

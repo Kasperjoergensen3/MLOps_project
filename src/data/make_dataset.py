@@ -10,24 +10,12 @@ from matplotlib import pyplot as plt
 
 
 DATA_PATH = Path(__file__).resolve().parents[2] / "data"
-IMG_DIM = (224, 224)
+IMG_SIZE = (224, 224)
 
-
-def load_image(image_path):
-    """
-    Load an image from a given path and return it as a torch.Tensor.
-
-    Args:
-    image_path (str): Path to the image file.
-
-    Returns:
-    torch.Tensor: The image as a tensor.
-    """
+    
+def transform_image(image : Image):
     # Define a transformation to convert the image to tensor
     transform = transforms.ToTensor()
-
-    # Load the image using PIL (Python Imaging Library)
-    image = Image.open(image_path)
 
     if image.mode != "L":
         image = image.convert("L")
@@ -35,11 +23,12 @@ def load_image(image_path):
     # Apply the transformation to the image
     image_tensor = transform(image)
 
-    # add batch dimension
+    # Add batch dimension
     image_tensor = image_tensor.unsqueeze(0)
-
+    # Resize
+    resize = transforms.Resize(IMG_SIZE, antialias=True)
+    image_tensor = resize(image_tensor)
     return image_tensor
-
 
 def build_dataset(mode="train", max_samples_per_class = float("inf")):
     """
@@ -67,9 +56,8 @@ def build_dataset(mode="train", max_samples_per_class = float("inf")):
         for image_path in class_dir.iterdir():
             if total_class_samples >= max_samples_per_class:
                 break
-            image = load_image(image_path)
-            resize = transforms.Resize(IMG_DIM, antialias=True)
-            image = resize(image)
+            image = Image.open(image_path)
+            image = transform_image(image)
             target = torch.Tensor([i]).type(torch.long)
             images = torch.cat([images, image])
             targets = torch.cat([targets, target])

@@ -2,9 +2,9 @@ name: "Run tests"
 
 on:
   push:
-    branches: [master, main]
+    branches: [master, main, testing-docker]
   pull_request:
-    branches: [master, main]
+    branches: [master, main, testing-docker]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.head_ref }}
