@@ -129,7 +129,7 @@ s230368, s204209, s233472, s204231
 >
 > Answer:
 
-We used the third-party framework Huggingface in our project. From Huggingface we used the pre-trained vision transformer model ViT as a starting point and from that we fine-tuned the model to our brain-tumor classification task. 
+We used the third-party framework Huggingface in our project. From Huggingface we used the pre-trained vision transformer model ViT as a starting point and from that we fine-tuned the model to our brain-tumor classification task.     
 
 ## Coding environment
 
