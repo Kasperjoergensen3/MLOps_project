@@ -238,7 +238,7 @@ We made use of branches one time, when working on the dockerfiles. One pull requ
 >
 > Answer:
 
---- question 10 fill here ---
+Employing Data Version Control (DVC) in our project improved data management. DVC allowed us to version and share datasets efficiently, ensuring reproducibility and traceability. By tracking changes to data files separately from code, it enhanced collaboration and made it easier to roll back to previous data states if necessary. However this wasn't necessary in our case. A case could be a deep learning project where one regularly updates a dataset. With DVC, one can version-control the data, ensuring each change is tracked. If a model trained on a specific dataset version yields unexpected results, DVC allows one to revert to a previous version, aiding in debugging and maintaining reproducibility.
 
 ### Question 11
 
