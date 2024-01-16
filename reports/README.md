@@ -193,7 +193,7 @@ From the cookiecutter template we have filled out the .dvc, .github/workflows, d
 >
 > Answer:
 
-We've executed 14 pytest tests, primarily focusing on data, SimpleCNN model, and app functionality. These tests validate data integrity, model architecture, and application behavior, ensuring robustness and accuracy. Regular integration helps identify and address issues promptly.
+We have run 14 pytest tests, with a primary emphasis on data, SimpleCNN model, and app functionality. These tests assess data integrity, model architecture, and application behavior, guaranteeing the robustness and accuracy of our system. The regular integration of these tests plays a crucial role in quickly identifying and addressing any potential issues, contributing to the overall reliability and performance of our project.
 
 ### Question 8
 
