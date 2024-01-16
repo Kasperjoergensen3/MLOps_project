@@ -163,7 +163,7 @@ We used the third-party framework Huggingface in our project. From Huggingface w
 > *experiments.*
 > Answer:
 
---- question 5 fill here ---
+From the cookiecutter template we have filled out the .dvc, .github/workflows, dockerfiles, tests and src. We have also added an API folder that contains the fastAPI script, html structure and a requirements.txt for the fastAPI.
 
 ### Question 6
 
