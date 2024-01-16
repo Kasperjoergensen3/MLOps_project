@@ -223,7 +223,7 @@ Our current code coverage is **X**%. So **X**% is covered by automated tests whe
 >
 > Answer:
 
---- question 9 fill here ---
+We made use of branches one time, when working on the dockerfiles. One pull request was also made to merge to the main branch. Afterwards the branch was deleted. Retrospectively it might have been smarter to just keep the branch, if we wanted to work further with the dockerfiles or something else. Generally branches in version control allow developers to work on features or fixes independently, preventing conflicts. Pull requests provide a mechanism to propose and review changes before merging them into the main codebase. This ensures code quality, collaboration, and easy rollback if needed. Together, branches and pull requests enhance collaboration, streamline development workflows, and maintain a clean and stable version control history.
 
 ### Question 10
 
