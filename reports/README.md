@@ -193,7 +193,7 @@ From the cookiecutter template we have filled out the .dvc, .github/workflows, d
 >
 > Answer:
 
---- question 7 fill here ---
+We've executed 14 pytest tests, primarily focusing on data, SimpleCNN model, and app functionality. These tests validate data integrity, model architecture, and application behavior, ensuring robustness and accuracy. Regular integration helps identify and address issues promptly.
 
 ### Question 8
 
