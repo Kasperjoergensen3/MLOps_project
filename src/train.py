@@ -2,9 +2,7 @@ from data_generator import CustomDataModule
 from src.models.ViT import ViT
 from pathlib import Path
 import pytorch_lightning as pl
-
 import hydra
-
 from pytorch_lightning.loggers import WandbLogger
 from src.utilities.modules import recursive_find_python_class
 from callbacks.plotting_callback import PlotLogger
