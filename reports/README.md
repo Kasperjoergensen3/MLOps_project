@@ -273,7 +273,7 @@ Employing Data Version Control (DVC) in our project improved data management. DV
 >
 > Answer:
 
---- question 12 fill here ---
+In our project, configuration management is orchestrated through two YAML files. The default_config.yaml serves as a baseline defining the model. To enhance experimentation, we employed Hydra and introduced sweep_config.yaml. This file does hyperparameter sweeping, specifically adjusting the learning rate with values in the range [0.001, 0.0001] and optimizer limited to "adam". The combined use of these configuration files optimizes hyperparameter exploration, offering a versatile and efficient approach to refining our model.
 
 ### Question 13
 
