@@ -163,7 +163,7 @@ We used the third-party framework Huggingface in our project. From Huggingface w
 > *experiments.*
 > Answer:
 
-From the cookiecutter template we have filled out the .dvc, .github/workflows, dockerfiles, tests and src. In the src folder we have filled out all the subfolders - conf, data, models, utilities and visualizations. In the src folder we have added a callbacks folder that contains a python script that plots the callbacks. We have also added an API folder that contains the fastAPI script, html structure and a requirements.txt for the fastAPI. We don't think we have removed any folders. The folders that aren't used are just left empty.
+From the cookiecutter template we have filled out the .dvc, .github/workflows, dockerfiles, tests and src. In the src folder we have filled out all the subfolders - conf, data, models, utilities and visualizations. In the src folder we have added a callbacks folder that contains a python script that plots the callbacks. We have also added an API folder that contains the fastAPI script, html structure and a requirements.txt for the fastAPI. We don't think we have removed any folders. The folders that aren't used are just left empty. In the root folder we have also added data.dvc, models.dvc a Makefile and much more.
 
 ### Question 6
 
