@@ -320,7 +320,7 @@ In our project, configuration management is orchestrated through two YAML files.
 >
 > Answer:
 
---- question 15 fill here ---
+We have 3 docker images - one for training the model, one for predictions using the trained model on a given checkpoint and then an API docker image, which is used in Google Cloud. For example to run the training docker image one would type the following in the terminal: 'docker run trainer:latest" as all the hyperparameters are loaded through Hydra. To see the dockerfiles explained above go into the folder caled dockerfiles and see: api.dockerfile, predict_model.dockerfile and train_model.dockerfile.
 
 ### Question 16
 
