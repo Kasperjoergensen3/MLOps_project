@@ -399,7 +399,7 @@ In our project, we utilized three key services: Engine, Bucket, and Cloud Run, e
 >
 > Answer:
 
---- question 18 fill here ---
+The foundation of our Google Cloud Platform (GCP) infrastructure lies in the Compute Engine. Leveraging this service, we configured a compute engine to efficiently handle various tasks within our project. This compute engine was specifically designed to clone our repository, pull necessary data, and ensure readiness for running diverse scripts, particularly the training script, along with other functionalities from our GitHub repository. In terms of the virtual machines (VMs) employed, we opted for instances featuring robust hardware specifications. These included a 50 GB disk, 2 virtual CPUs (vCPU), 1 core, and 8 GB of memory. Our VMs were based on the c0-deeplearning-common-cpu-v20230925-debian-10 image, which provided a reliable and optimized environment for our deep learning workflows.
 
 ### Question 19
 
