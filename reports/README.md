@@ -423,7 +423,11 @@ Here is a screen shot of different buckets used in the project:
 >
 > Answer:
 
---- question 20 fill here ---
+here is a screen shot of different container registry for this project.
+![Buckets](figures/containers.png)
+
+1. api: contains different different packed versions of the API.
+2. testing: contains small size containers which was used for for debugging
 
 ### Question 21
 
