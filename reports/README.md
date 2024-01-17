@@ -57,7 +57,7 @@ end of the project.
 * [x] Fill out the `make_dataset.py` file such that it downloads whatever data you need and
 * [x] Add a model file and a training script and get that running
 * [x] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
-* [ ] Remember to comply with good coding practices (`pep8`) while doing the project
+* [x] Remember to comply with good coding practices (`pep8`) while doing the project
 * [x] Do a bit of code typing and remember to document essential parts of your code
 * [x] Setup version control for your data or part of your data
 * [x] Construct one or multiple docker files for your code
@@ -129,7 +129,7 @@ s230368, s204209, s233472, s204231
 >
 > Answer:
 
-We used the third-party framework Huggingface in our project. From Huggingface we used the pre-trained vision transformer model ViT as a starting point and from that we fine-tuned the model to our brain-tumor classification task.     
+Our project relied on the third-party framework called Hugging Face. The decision to use Hugging Face was rooted in its practicality, effectiveness and how easy it is to find open source machine learning models. We took advantage of the pre-trained vision transformer model, ViT. Fine-tuning it for our specific brain tumor classification task was made straightforward.
 
 ## Coding environment
 
@@ -163,7 +163,7 @@ We used the third-party framework Huggingface in our project. From Huggingface w
 > *experiments.*
 > Answer:
 
---- question 5 fill here ---
+From the cookiecutter template we have filled out the .dvc, .github/workflows, dockerfiles, tests and src. In the src folder we have filled out all the subfolders - conf, data, models, utilities and visualizations. In the src folder we have added a callbacks folder that contains a python script that plots the callbacks. We have also added an API folder that contains the fastAPI script, html structure and a requirements.txt for the fastAPI. We don't think we have removed any folders. The folders that aren't used are just left empty. In the root folder we have also added data.dvc, models.dvc a Makefile and much more.
 
 ### Question 6
 
@@ -174,7 +174,7 @@ We used the third-party framework Huggingface in our project. From Huggingface w
 >
 > Answer:
 
---- question 6 fill here ---
+We have used the open source package called Ruff, which is "_An extremely fast Python linter and code formatter, written in Rust_". Ruff enforces a consistent code style, enhancing readability and collaboration for developers. Consistent code also aids automated testing and debugging, ensuring robustness in larger projects. This proactive approach to code quality streamlines development workflows, fosters maintainability, and ultimately contributes to a more efficient and scalable software development process.
 
 ## Version control
 
@@ -193,7 +193,7 @@ We used the third-party framework Huggingface in our project. From Huggingface w
 >
 > Answer:
 
---- question 7 fill here ---
+We have run 14 pytest tests, with a primary emphasis on data, SimpleCNN model, and app functionality. These tests assess data integrity, model architecture, and application behavior, guaranteeing the robustness and accuracy of our system. The regular integration of these tests plays a crucial role in quickly identifying and addressing any potential issues, contributing to the overall reliability and performance of our project.
 
 ### Question 8
 
@@ -208,7 +208,7 @@ We used the third-party framework Huggingface in our project. From Huggingface w
 >
 > Answer:
 
---- question 8 fill here ---
+Our current code coverage is **51**%. So **51**% is covered by automated tests when pushing to github. While a higher code coverage percentage is generally desirable, achieving 100% coverage doesn't guarantee a completely error-free code. Code coverage primarily measures the proportion of code touched by tests, but it doesn't necessarily account for all possible scenarios and edge cases. Even with close to 100% coverage, there could be subtle bugs, unhandled edge cases, or integration issues that tests might not catch. Comprehensive testing involves not only achieving high coverage but also designing tests that thoroughly explore various code paths and scenarios.
 
 ### Question 9
 
@@ -223,7 +223,7 @@ We used the third-party framework Huggingface in our project. From Huggingface w
 >
 > Answer:
 
---- question 9 fill here ---
+We made use of branches one time, when working on the dockerfiles. One pull request was also made to merge to the main branch. Afterwards the branch was deleted. Retrospectively it might have been smarter to just keep the branch, if we wanted to work further with the dockerfiles or something else. Generally branches in version control allow developers to work on features or fixes independently, preventing conflicts. Pull requests provide a mechanism to propose and review changes before merging them into the main codebase. This ensures code quality, collaboration, and easy rollback if needed. Together, branches and pull requests enhance collaboration, streamline development workflows, and maintain a clean and stable version control history.
 
 ### Question 10
 
@@ -238,7 +238,7 @@ We used the third-party framework Huggingface in our project. From Huggingface w
 >
 > Answer:
 
---- question 10 fill here ---
+Employing Data Version Control (DVC) in our project improved data management. DVC allowed us to version and share datasets efficiently, ensuring reproducibility and traceability. By tracking changes to data files separately from code, it enhanced collaboration and made it easier to roll back to previous data states if necessary. However this wasn't necessary in our case. A case could be a deep learning project where one regularly updates a dataset. With DVC, one can version-control the data, ensuring each change is tracked. If a model trained on a specific dataset version yields unexpected results, DVC allows one to revert to a previous version, aiding in debugging and maintaining reproducibility.
 
 ### Question 11
 
@@ -273,7 +273,7 @@ We used the third-party framework Huggingface in our project. From Huggingface w
 >
 > Answer:
 
---- question 12 fill here ---
+In our project, configuration management is orchestrated through two YAML files. The default_config.yaml serves as a baseline defining the model. To enhance experimentation, we employed Hydra and introduced sweep_config.yaml. This file does hyperparameter sweeping, specifically adjusting the learning rate with values in the range [0.001, 0.0001] and optimizer limited to "adam". The combined use of these configuration files optimizes hyperparameter exploration, offering a versatile and efficient approach to refining our model.
 
 ### Question 13
 
@@ -320,7 +320,7 @@ We used the third-party framework Huggingface in our project. From Huggingface w
 >
 > Answer:
 
---- question 15 fill here ---
+Our project encompasses three essential Docker images, each serving a distinct purpose in our machine learning pipeline. The first image is dedicated to training the model, while the second facilitates predictions using the trained model from a specified checkpoint. The third image serves as an API container, seamlessly integrating with Google Cloud. For instance, executing the training Docker image involves a simple terminal command: 'docker run trainer:latest.' The beauty of this approach lies in the utilization of Hydra to load hyperparameters dynamically. To delve deeper into the intricacies of these Docker images, navigate to the 'dockerfiles' directory. There, you'll find detailed explanations for each image in the form of 'api.dockerfile,' 'predict_model.dockerfile,' and 'train_model.dockerfile.'
 
 ### Question 16
 
