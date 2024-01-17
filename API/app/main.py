@@ -40,7 +40,7 @@ def load_models():
         models[model_name.value] = model
     return models
 
-def add_feature_vec_to_DB(now:str, img:torch.Tensor, class_pred:str):
+def add_feature_vec_to_DB(now:str, model_name:str, img:torch.Tensor, class_pred:str, vec_pred:np.ndarray):
     mean = torch.mean(img)
     contrast = torch.std(img)
     # Initialize the client
@@ -55,7 +55,7 @@ def add_feature_vec_to_DB(now:str, img:torch.Tensor, class_pred:str):
 
     #Add feature to database
     with open(MODEL_FILE, "a") as file:
-        file.write(f"\n{now}, {mean}, {contrast}, {class_pred}")
+        file.write(f"\n{now}, {model_name}, {mean}, {contrast}, {class_pred}, {vec_pred}, none")
 
     #Upload file to GCP
     blob.upload_from_filename(MODEL_FILE)
@@ -143,7 +143,14 @@ async def inference(request: Request, background_tasks: BackgroundTasks):
     
     counter += 1
     now = str(datetime.now())   
-    background_tasks.add_task(add_feature_vec_to_DB, now, image_tensor, int(top_class.item()))
+    background_tasks.add_task(
+                    add_feature_vec_to_DB, 
+                    now, 
+                    model_name, 
+                    image_tensor, 
+                    int(top_class.item()),
+                    ps.numpy()
+                    )
 
     if counter % 4 == 0:
         background_tasks.add_task(data_drift_func)
@@ -155,5 +162,28 @@ async def inference(request: Request, background_tasks: BackgroundTasks):
 
     return JSONResponse(content={"prediction": prediction, "image": img_base64, "model_name": model_name})
 
+@app.post("/log-button-click")
+async def log_button_click(request: Request):
+    body = await request.json()
+    button_name = body['buttonName']
+    #session_id = body['sessionId']
+
+    # Initialize the client
+    BUCKET_NAME = "api_user_inputs"
+    MODEL_FILE = "input.csv"
+    client = storage.Client(project='mlopsproject')
+    bucket = client.get_bucket(BUCKET_NAME)
+    # Download the file
+    blob = bucket.blob(MODEL_FILE)
+    blob.download_to_filename(MODEL_FILE)
+    #Add feature to database
+    df = pd.read_csv(MODEL_FILE)
+    df.iloc[-1, -1] = button_name
+    # Write the modified DataFrame back to the file
+    df.to_csv("API/app/"+MODEL_FILE, index=False)
+    #Upload file to GCP
+    blob.upload_from_filename("API/app/"+MODEL_FILE)
+
+    return JSONResponse(content={"log_status": "Feedback logged successfully"})
 
 Instrumentator().instrument(app).expose(app)
