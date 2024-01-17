@@ -2,9 +2,9 @@ name: "Run Ruff Formating and Linting with Auto-fix"
 
 on:
   push:
-    branches: [ruff-integration]
+    branches: [master, main]
   pull_request:
-    branches: [ruff-integration]
+    branches: [master, main]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.head_ref }}
