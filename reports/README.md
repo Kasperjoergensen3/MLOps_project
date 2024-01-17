@@ -471,7 +471,7 @@ here is a screen shot of the container registry for this project.
 >
 > Answer:
 
---- question 23 fill here ---
+We've incorporated two distinct monitoring mechanisms for our deployed model. Within our API, a performance metric has been implemented, offering doctors or real-world users the ability to rectify model predictions if deemed inaccurate. This feedback is then saved and stored in a designated bucket as a .csv file, encompassing not only the model's prediction, the users prediction but also details like the specific model used and attributes assessing data drift, such as feature means. In addition to this, the second monitoring layer involves leveraging telemetry within Google Cloud Run. This system actively tracks key metrics, including the request count, request latencies, container instance count, billable container instance time, container CPU utilization, container memory utilization, sent bytes, recieved bytes, max concurrent requests & container startup latency providing real-time insights into the model's usage and performance.
 
 ### Question 24
 
