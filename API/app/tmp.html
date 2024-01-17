@@ -19,9 +19,6 @@
         </style>
     </head>
 <body>
-    <div id="histogram-container" style="float: right; width: 50%;"></div>
-    <div id="dataframe-container" style="position: absolute; bottom: 0; right: 0; width: 50%;"></div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <h1>Brain tumor Classification</h1>
     <h3>Choose a Model:</h3>
     <div class="model-button-container">
@@ -54,10 +51,6 @@
 
             document.getElementById('prediction').textContent = '';
             document.getElementById('model-name').textContent = '';
-
-            // Clear the histogram container and create a new canvas
-            const histogramContainer = document.getElementById('histogram-container');
-            histogramContainer.innerHTML = ''; // Clear existing content
 }
         let selectedModel = '';
         function chooseModel(modelName) {
@@ -94,7 +87,6 @@
         alert('Please select a model');
         return;
         }
-        
         // Hide the Classify button
         document.getElementById('submit-button').style.display = 'none';
         // Clear the feedback message
@@ -119,35 +111,6 @@
         });
 
         const result = await response.json();
-        // Clear the histogram container and create a new canvas
-        const histogramContainer = document.getElementById('histogram-container');
-        histogramContainer.innerHTML = ''; // Clear existing content
-        const canvas = document.createElement('canvas');
-        canvas.id = 'histogram-canvas';
-        histogramContainer.appendChild(canvas);
-        // Create a histogram from the probabilities
-        const classes = ["glioma", "meningioma", "no-tumor", "pituitary"];
-        const ctx = canvas.getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: classes,
-                datasets: [{
-                    label: 'Class probability',
-                    data: result.probs,
-                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
-                    borderColor: 'rgba(0, 123, 255, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
         document.getElementById('prediction').textContent = 'Prediction: ' + result.prediction;
         document.getElementById('model-name').textContent = 'Model: ' + result.model_name;
 
@@ -184,26 +147,10 @@
                 if (result.log_status) {
                     document.getElementById('feedback-message').textContent = result.log_status;
                 }
-                // Parse the DataFrame JSON and display it
-                const dataframe = JSON.parse(result.data_frame);
-                const dataframeHtml = generateDataFrameHtml(dataframe);
-                document.getElementById('dataframe-container').innerHTML = dataframeHtml;
             } catch (error) {
                 console.error('Error logging feedback:', error);
                 document.getElementById('feedback-message').textContent = 'Error logging feedback';
             }
-        }
-        function generateDataFrameHtml(data) {
-            let html = '<table>';
-            data.forEach(row => {
-                html += '<tr>';
-                for (const key in row) {
-                    html += `<td>${row[key]}</td>`;
-                }
-                html += '</tr>';
-            });
-            html += '</table>';
-            return html;
         }
     </script>
     
@@ -221,3 +168,4 @@
     <button onclick="window.location.href='/drift-report'">Drift Report</button>
 </body>
 </html>
+
