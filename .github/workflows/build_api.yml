@@ -31,3 +31,4 @@ jobs:
         - 'gcr.io/grounded-camp-410709/api:latest'
         - '--region'
         - 'europe-west1'
+#test
