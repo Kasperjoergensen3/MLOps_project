@@ -12,9 +12,7 @@ class ViT(pl.LightningModule):
         print(config)
 
         # Load pretrained model
-        self.ViT = ViTForImageClassification.from_pretrained(
-            "google/vit-base-patch16-224-in21k"
-        )
+        self.ViT = ViTForImageClassification.from_pretrained("google/vit-base-patch16-224-in21k")
 
         # make conv2d layer converting 1 channel to 3 channels
         self.head = nn.Conv2d(

@@ -23,9 +23,7 @@ def train(config):
     # init logger
     if config.trainer.wandb:
         run_name = f"{config.model.name}_{config.trainer.optimizer}_{config.trainer.lr}_loss_{config.trainer.loss}"
-        logger = WandbLogger(
-            project="MLOps_project", entity="mlops_team29", name=run_name
-        )
+        logger = WandbLogger(project="MLOps_project", entity="mlops_team29", name=run_name)
     else:
         logger = None
 
@@ -71,4 +69,3 @@ def train(config):
 
 if __name__ == "__main__":
     train()
-

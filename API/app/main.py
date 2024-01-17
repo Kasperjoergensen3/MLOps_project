@@ -14,9 +14,11 @@ import base64
 from time import time
 from src.data.make_dataset import transform_image
 
+
 class ItemEnum(Enum):
     ViT = "ViT"
     SimpleCNN = "SimpleCNN"
+
 
 def load_models():
     models = {}
@@ -33,15 +35,18 @@ def load_models():
         models[model_name.value] = model
     return models
 
+
 app = FastAPI()
 start = time()
 models = load_models()
 print("Model loaded in {} seconds".format(time() - start))
 
+
 @app.get("/", response_class=HTMLResponse)
 async def read_index():
     with open("API/app/app.html", "r") as f:
         return f.read()
+
 
 @app.post("/inference/")
 async def inference(request: Request):
@@ -52,7 +57,7 @@ async def inference(request: Request):
         raise HTTPException(status_code=400, detail="File is not an image.")
     if model_name not in models:
         raise HTTPException(status_code=500, detail="Model not loaded.")
-    
+
     model = models[model_name]
 
     start = time()

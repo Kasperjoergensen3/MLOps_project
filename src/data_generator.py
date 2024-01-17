@@ -27,9 +27,7 @@ class CustomDataModule(pl.LightningDataModule):
         if stage == "test" or stage is None:
             self.test_dataset = torch.load(self.data_path / "test.pt")
             if self.quick_test:
-                self.test_dataset = torch.utils.data.Subset(
-                    self.test_dataset, range(0, 10)
-                )
+                self.test_dataset = torch.utils.data.Subset(self.test_dataset, range(0, 10))
 
     def train_dataloader(self):
         # Return the dataloader for training

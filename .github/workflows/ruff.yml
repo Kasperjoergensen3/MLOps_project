@@ -47,8 +47,8 @@ jobs:
           pip install -r requirements.txt
           pip install ruff
 
+      - name: Ruff formating
+        run: ruff format .
+
       - name: Auto-fix Ruff issues
         run: ruff --fix
-
-      - name: Run Ruff Linting
-        run: ruff .

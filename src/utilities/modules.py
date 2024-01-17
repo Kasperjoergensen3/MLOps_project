@@ -5,9 +5,7 @@ import pkgutil
 import src
 
 
-def recursive_find_python_class(
-    name, folder=None, current_module="src.models", exit_if_not_found=True
-):
+def recursive_find_python_class(name, folder=None, current_module="src.models", exit_if_not_found=True):
     # Set default search path to root modules
     if folder is None:
         folder = [os.path.join(src.__path__[0], *current_module.split(".")[1:])]
