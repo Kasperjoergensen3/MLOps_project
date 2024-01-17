@@ -380,7 +380,10 @@ When running into bugs, we first look at the errors the code gave in the logs an
 >
 > Answer:
 
---- question 17 fill here ---
+In our project, we utilized three key services: Engine, Bucket, and Cloud Run, each serving a specific purpose:
+1. Engine: This service was primarily used for model training. The process involved cloning our git repository onto the Engine, pulling the necessary data, and building Docker images from the experiment-specific Dockerfiles. Although the Engine provided more computing power than our laptops, it's important to note that we still didn't have access to GPU quotas.
+2. Bucket: This service was employed to store various types of data, including raw data, model checkpoints, and API interaction data. A major advantage of using Bucket was the elimination of the need to pack data or model checkpoints into Docker files, which helped in keeping the image file sizes manageable.
+3. Cloud Run: We used Cloud Run for deploying our final API application. This service allowed us to efficiently deploy and manage our application in the cloud.
 
 ### Question 18
 
