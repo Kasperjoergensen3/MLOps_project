@@ -13,7 +13,7 @@ jobs:
         run: |
           echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login \
             -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin docker.io
-          docker build --f dockerfiles/api.dockerfile -t api:latest 
+          docker build -f dockerfiles/api.dockerfile -t api:latest 
           docker tag api gcr.io/grounded-camp-410709/api
           docker push gcr.io/grounded-camp-410709/api
           gcloud run deploy api --image gcr.io/grounded-camp-410709/api --region europe-west1
