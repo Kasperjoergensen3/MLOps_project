@@ -529,7 +529,7 @@ The diagram presents a comprehensive flowchart of the ML software development, s
 >
 > Answer:
 
---- question 26 fill here ---
+One of the challenges in the project was getting the docker to run in a container. There was alot of debugging and trying to get it to run without using too much RAM as it had a exit code 137 OOM (OutOfMemoryError). It also took alot of time to test if a small change had fixed the problem, because more often than not the docker had to build all over from scratch, which took a couple of minutes. This was not only true for this one error. Everyone in the group that dealt with a dockerfile had alot of trouble getting it to run correctly. Another big and time consuming struggle was setting up the API. Especially all the HTML code, since none of us had written any HTML before this. Another big problem was getting DVC to work correctly. Not only was it a huge difficulty to get it up and running, but we also kept running into problems later on with it. Google Drive and DVC had some problems working together, so we ended up restarting the whole DVC and Google Drive process. After this we haven't had any major issues with it. A time consuming problem was also getting the unittests to run correctly. It was fairly easy to get running locally. However when pushing to GitHub we encountered problems with the unit tests. After much troubleshooting we discovered that it just was a stupid and simple mistake with a .gitignore file.
 
 ### Question 27
 
