@@ -11,14 +11,13 @@ jobs:
       - uses: actions/checkout@v2
       - name: deploy api
         run: |
-          echo "${{ secrets.KEY_FILE }}"
-        # gcloud auth activate-service-account --key-file= "${{ secrets.KEY_FILE }}"
-        # echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login \
-        #   -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin docker.io
-        # docker build -f dockerfiles/api.dockerfile . -t api:latest 
-        # docker tag api gcr.io/grounded-camp-410709/api
-        # docker push gcr.io/grounded-camp-410709/api
-        # gcloud run deploy api --image gcr.io/grounded-camp-410709/api --region europe-west1
+          gcloud auth activate-service-account --key-file= grounded-camp-410709-eda23609dad5.json
+      # echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login \
+      #   -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin docker.io
+      # docker build -f dockerfiles/api.dockerfile . -t api:latest 
+      # docker tag api gcr.io/grounded-camp-410709/api
+      # docker push gcr.io/grounded-camp-410709/api
+      # gcloud run deploy api --image gcr.io/grounded-camp-410709/api --region europe-west1
 
 
       # # Build the container image
