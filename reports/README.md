@@ -506,7 +506,12 @@ Jonatan used 17$, Kasper used 9.85$, Asger used 2.67$ and Alexander used all 50$
 >
 > Answer:
 
---- question 25 fill here ---
+UPDATE THIS
+[this figure](figures/overview.png)
+
+The starting point of the diagram is our local setup, where we used cookie cutter to create the initial project folder structure. here after a visual transformer from huggingspace Transformers framework were integrated into i pytorchlighnting module. pytorch lighning was thus used to handle moste of the boilerplate code connected to setting up the training. Hydra was used to handle the config files used during training and WandB was used for logging. here we looged both train loss, validation loss and validation accuracy as logging mesures further we add calbacks for modelcheckpointing, early stopping and a custom callback for logging a T-SNE plot of the latent space right before the last classifiaction layer in the model, this plot help track the training progressing as we could see more and more destictible classes in the plot.
+
+whenever we push code to github it triggers actions that runs test, uploads a code coverger report to codecov.io, and build the docker images and sends them to the container regerstry in GCP. The best model was deployed using cloud run where we choose the latest API container for deployment.
 
 ### Question 26
 
