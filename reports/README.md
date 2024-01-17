@@ -446,7 +446,7 @@ here is a screen shot of the container registry for this project.
 >
 > Answer:
 
-![Cloud Build history](figures/build_histroy.png)
+![Cloud_Build_history](figures/build_histroy.png)
 
 ### Question 22
 
