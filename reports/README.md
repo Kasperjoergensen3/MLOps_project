@@ -462,7 +462,7 @@ here is a screen shot of the container registry for this project.
 >
 > Answer:
 
---- question 22 fill here ---
+We successfully deployed our model using FastAPI and Docker, encapsulating the model within an application. Initially, we conducted local testing to ensure seamless functionality. Upon validation, we proceeded to deploy the model in the cloud, leveraging Google Cloud Run for its scalability and ease of management.
 
 ### Question 23
 
