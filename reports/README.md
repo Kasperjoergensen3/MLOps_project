@@ -129,7 +129,9 @@ s230368, s204209, s233472, s204231
 >
 > Answer:
 
-Our project relied on the third-party framework called Hugging Face. The decision to use Hugging Face was rooted in its practicality, effectiveness and how easy it is to find open source machine learning models. We took advantage of the pre-trained vision transformer model, ViT. Fine-tuning it for our specific brain tumor classification task was made straightforward.
+Our project leveraged Hugging Face, a third-party framework chosen for its practicality, effectiveness, and accessibility of open-source machine learning models. We utilized the pre-trained Vision Transformer (ViT) model, adapting it for our specific task of brain tumor classification. This adaptation involved adding an initial layer to convert 1-channel grayscale images into 3-channel images, aligning with ViT's input requirements. Additionally, we replaced the final classification layer with one tailored to four classes.
+
+This approach allowed us to efficiently incorporate the model into a PyTorch Lightning module. The significant advantage of using pre-trained weights meant we could fine-tune the model for our task without extensive training time. This was particularly beneficial as we lacked access to GPU resources, making training such a large model from scratch impractical and time-consuming. Our method enabled us to implement a complex model effectively, overcoming hardware limitations.
 
 ## Coding environment
 
