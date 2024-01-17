@@ -283,7 +283,13 @@ Employing Data Version Control (DVC) in our project improved data management. DV
 >
 > Answer:
 
---- question 11 fill here ---
+Our continuous integration (CI) setup through GitHub Actions is focused on three main areas: unit testing, linting, and Docker image building. Each of these is managed by a specific workflow.
+
+For unit testing, we use the test.yml workflow. This is triggered on pushes and pull requests to our main branches. We currently test on Ubuntu using Python 3.10 and PyTorch 2.1.2. Although we're only testing in this environment right now, the setup is adaptable for testing across different operating systems and Python versions in the future. To speed up our tests, we use caching for our dependencies. This makes the testing process faster and more consistent. After the tests, we generate and upload coverage reports to Codecov, which helps us track how much of our code is covered by tests.
+
+The ruff.yml workflow performs formatting with ruff as well as ruff with --fix which attempts to resolve linting issues automatically (eg. removing unused imports). Like our testing workflow, it runs on pushes and pull requests to our main branches and uses caching to improve performance.
+
+Finally, we have the build-docker-image.yml workflow for Docker. This builds and pushes Docker images to Docker Hub on pushes to the main branch. This step ensures our application is always ready for deployment in a containerized environment.
 
 ## Running code and tracking experiments
 
