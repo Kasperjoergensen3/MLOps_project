@@ -160,7 +160,8 @@ async def inference(request: Request, background_tasks: BackgroundTasks):
     image.save(buffered, format="JPEG")
     img_base64 = base64.b64encode(buffered.getvalue()).decode()
 
-    return JSONResponse(content={"prediction": prediction, "image": img_base64, "model_name": model_name})
+    return JSONResponse(content={"prediction": prediction, "image": img_base64, 
+                                 "model_name": model_name, "probs": ps.numpy().tolist()[0]})
 
 @app.post("/log-button-click")
 async def log_button_click(request: Request):
@@ -184,6 +185,9 @@ async def log_button_click(request: Request):
     #Upload file to GCP
     blob.upload_from_filename("API/app/"+MODEL_FILE)
 
-    return JSONResponse(content={"log_status": "Feedback logged successfully"})
+    tail_json = df.tail().to_json(orient='records')
+    print(tail_json)
+
+    return JSONResponse(content={"log_status": "Feedback logged successfully", "data_frame": tail_json})
 
 Instrumentator().instrument(app).expose(app)
