@@ -471,7 +471,7 @@ In our project, we utilized three key services: Engine, Bucket, and Cloud Run, e
 >
 > Answer:
 
-Jonatan used 17$, Kasper used 9.85$, Asger used 2.67$ and Alexander used all 50$ because he created too many containers and let them sit idle overnight😅.
+Jonatan used 17$, Kasper used 9.85$, Asger used 2.67$ and Alexander used all 50$ because he created too many containers and let them sit idle overnight😅. In total 79.5$ was spent during development.
 
 ## Overall discussion of project
 
