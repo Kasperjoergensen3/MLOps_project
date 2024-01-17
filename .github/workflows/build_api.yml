@@ -10,10 +10,15 @@ jobs:
     steps:
       # Build the container image
       - name: 'gcr.io/cloud-builders/docker'
-        args: ['build', '-t', 'gcr.io/grounded-camp-410709/api:latest', '.'] 
+        run: |
+          echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login \
+            -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin docker.io
+          docker build --f dockerfiles/api.dockerfile -t api:latest 
       # Push the container image to Container Registry
       - name: 'gcr.io/cloud-builders/docker'
-        args: ['push', 'gcr.io/grounded-camp-410709/api:latest']
+        run: |
+          docker tag api gcr.io/grounded-camp-410709/api
+          docker push gcr.io/grounded-camp-410709/api
       # Deploy container image to Cloud Run
       - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
         entrypoint: gcloud
