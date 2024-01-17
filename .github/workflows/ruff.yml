@@ -1,4 +1,4 @@
-name: "Run Ruff Linting"
+name: "Run Ruff Formating and Linting with Auto-fix"
 
 on:
   push:
