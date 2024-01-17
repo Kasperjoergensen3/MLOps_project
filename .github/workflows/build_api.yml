@@ -8,6 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       # Build the container image
       - name: 'gcr.io/cloud-builders/docker'
         run: |
