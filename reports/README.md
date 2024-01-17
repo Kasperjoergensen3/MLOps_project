@@ -248,7 +248,11 @@ Our current code coverage is **51**%. So **51**% is covered by automated tests w
 >
 > Answer:
 
-We made use of branches one time, when working on the dockerfiles. One pull request was also made to merge to the main branch. Afterwards the branch was deleted. Retrospectively it might have been smarter to just keep the branch, if we wanted to work further with the dockerfiles or something else. Generally branches in version control allow developers to work on features or fixes independently, preventing conflicts. Pull requests provide a mechanism to propose and review changes before merging them into the main codebase. This ensures code quality, collaboration, and easy rollback if needed. Together, branches and pull requests enhance collaboration, streamline development workflows, and maintain a clean and stable version control history.
+In our project, we strategically used branches and pull requests, although our approach wasn't as structured as it could've been. We primarily utilized branches for significant changes or features we anticipated would require multiple iterations. This practice was mainly to prevent the main branch from being cluttered with non-functional commits. Post-implementation, we merged these branches into the main through pull requests and subsequently deleted the branches. The main branch wasn't always kept in a deployable state, which, while manageable within our team, is not a recommended practice in a professional setting and potentially terribly annoying if someone expects main to work. 
+
+Generally branches in version control allow developers to work on features or fixes independently, preventing conflicts. Pull requests provide a mechanism to propose and review changes before merging them into the main codebase. This ensures code quality, collaboration, and easy rollback if needed. Together, branches and pull requests enhance collaboration, streamline development workflows, and maintain a clean and stable version control history.
+
+In retrospect to could have utilized the branches and pull-requests more effectively and in a way that is more aligned with the intended purposes. This could have offered a less messy workflow while potentially preventing bugs etc.
 
 ### Question 10
 
@@ -279,7 +283,13 @@ Employing Data Version Control (DVC) in our project improved data management. DV
 >
 > Answer:
 
---- question 11 fill here ---
+Our continuous integration (CI) setup through GitHub Actions is focused on three main areas: unit testing, linting, and Docker image building. Each of these is managed by a specific workflow.
+
+For unit testing, we use the test.yml workflow. This is triggered on pushes and pull requests to our main branches. We currently test on Ubuntu using Python 3.10 and PyTorch 2.1.2. Although we're only testing in this environment right now, the setup is adaptable for testing across different operating systems and Python versions in the future. To speed up our tests, we use caching for our dependencies. This makes the testing process faster and more consistent. After the tests, we generate and upload coverage reports to Codecov, which helps us track how much of our code is covered by tests.
+
+The ruff.yml workflow performs formatting with ruff as well as ruff with --fix which attempts to resolve linting issues automatically (eg. removing unused imports). Like our testing workflow, it runs on pushes and pull requests to our main branches and uses caching to improve performance.
+
+Finally, we have the build-docker-image.yml workflow for Docker. This builds and pushes Docker images to Docker Hub on pushes to the main branch. This step ensures our application is always ready for deployment in a containerized environment.
 
 ## Running code and tracking experiments
 
@@ -313,7 +323,9 @@ In our project, configuration management is orchestrated through two YAML files.
 >
 > Answer:
 
---- question 13 fill here ---
+We incorporated config files managed by Hydra and set a random seed to ensure consistency in our experiments. Additionally, we utilized Docker to package our experiments (like training and prediction scripts) into reproducible containers. These containers build a specific virtual machine with designated hardware configurations and guarantee the use of consistent dependencies.
+
+To replicate our experiments, one needs to build the Docker files stored in the Docker folder, where each experiment has its own file. Running these images on their system should ensure full reproducibility of the experiments. For those who prefer not to use Docker, an alternative is to manually replicate the virtual environment (as outlined in question 3) and rerun the training scripts with the specific configurations of the experiment they wish to reproduce. This flexibility allows for consistent and reproducible results, whether using Docker or a manual setup.
 
 ### Question 14
 
@@ -330,7 +342,8 @@ In our project, configuration management is orchestrated through two YAML files.
 >
 > Answer:
 
-![Wandb charts](figures/wandb_charts.png)
+The first image reveals four plots showing training loss, validation loss, epochs and validations accuarcy. The first graph charts training loss against optimization steps, where a general decline is observed, aligning with expectations. The second plot showcases the validation loss for both ViT and SimpleCNN models across numerous runs, assessing unseen validation data. Most models exhibit a declining validation loss per step. The third plot illustrates epochs in relation to steps. Lastly, the fourth plot depicts validation accuracy as a function of steps. Notably, an outlier model with unusually high accuracy may stem from a code bug. If one were to discard this outlier from the plot it would reveal a consistent increase in validation accuracy per step for the remaining models. The second image is a single T-SNE (t-Distributed Stochastic Neighbor Embedding) plot. T-SNE is smart since it is a visualization technique used to represent high-dimensional data in a lower-dimensional space, which is perfekt for us. In the plot one can see 4 different colors being plotted (blue, light blue, yellow and brown), which correspond to the 4 different types of brain tumors we are trying to classify (where one of them is no tumor). Here we see that the T-SNE plot splits up the 4 classes quite well, which indicates that our model has a good latent space. So the T-SNE plot is used to check if the latent space is good, which in turn affects how good our model is going to be.
+![Wandb plots](figures/wandb_charts.png)
 ![Wandb T-SNE](figures/T-SNE.png)
 
 ### Question 15
@@ -378,7 +391,10 @@ When running into bugs, we first look at the errors the code gave in the logs an
 >
 > Answer:
 
---- question 17 fill here ---
+In our project, we utilized three key services: Engine, Bucket, and Cloud Run, each serving a specific purpose:
+1. Engine: This service was primarily used for model training. The process involved cloning our git repository onto the Engine, pulling the necessary data, and building Docker images from the experiment-specific Dockerfiles. Although the Engine provided more computing power than our laptops, it's important to note that we still didn't have access to GPU quotas.
+2. Bucket: This service was employed to store various types of data, including raw data, model checkpoints, and API interaction data. A major advantage of using Bucket was the elimination of the need to pack data or model checkpoints into Docker files, which helped in keeping the image file sizes manageable.
+3. Cloud Run: We used Cloud Run for deploying our final API application. This service allowed us to efficiently deploy and manage our application in the cloud.
 
 ### Question 18
 
@@ -393,7 +409,7 @@ When running into bugs, we first look at the errors the code gave in the logs an
 >
 > Answer:
 
---- question 18 fill here ---
+The foundation of our Google Cloud Platform (GCP) infrastructure lies in the Compute Engine. Leveraging this service, we configured a compute engine to efficiently handle various tasks within our project. This compute engine was specifically designed to clone our repository, pull necessary data, and ensure readiness for running diverse scripts, particularly the training script, along with other functionalities from our GitHub repository. In terms of the virtual machines (VMs) employed, we opted for instances featuring robust hardware specifications. These included a 50 GB disk, 2 virtual CPUs (vCPU), 1 core, and 8 GB of memory. Our VMs were based on the c0-deeplearning-common-cpu-v20230925-debian-10 image, which provided a reliable and optimized environment for our deep learning workflows.
 
 ### Question 19
 
@@ -402,7 +418,13 @@ When running into bugs, we first look at the errors the code gave in the logs an
 >
 > Answer:
 
---- question 19 fill here ---
+Here is a screen shot of different buckets used in the project:
+![Buckets](figures/buckets.png)
+
+1. api_user_inputs: This bucket contains an 'inputs.csv' file, which logs all API user interactions. It records input images, measures, model performance metrics, and timestamps. Additionally, it houses images of performance visualizations and an HTML file linked to the Evidently-generated data drift report. These files are dynamically updated during API interactions, ensuring real-time tracking and analysis of user engagement and model performance.
+2. models_group29: This is a dedicated bucket for storing model checkpoints and their respective configuration files. Model weights are loaded from this bucket, ensuring a streamlined process for retrieving the latest and relevant model data for various tasks, such as training, validation, or deployment.
+3. data_splits_group29: This bucket contains all raw and processed data splits. It is the primary source for our data version control, as we perform 'dvc pull` operations from this container. This approach ensures that everyone working on the project has access to the same data versions, promoting consistency and reproducibility in our data-driven tasks.
+4. the rest is not relevant for this project.
 
 ### Question 20
 
@@ -411,7 +433,11 @@ When running into bugs, we first look at the errors the code gave in the logs an
 >
 > Answer:
 
---- question 20 fill here ---
+here is a screen shot of the container registry for this project.
+![Buckets](figures/containers.png)
+
+1. api: contains different different packed versions of the API.
+2. testing: contains small size containers which was used for for debugging
 
 ### Question 21
 
@@ -420,7 +446,7 @@ When running into bugs, we first look at the errors the code gave in the logs an
 >
 > Answer:
 
---- question 21 fill here ---
+![Cloud Build history](figures/build_history.png)
 
 ### Question 22
 
@@ -436,7 +462,7 @@ When running into bugs, we first look at the errors the code gave in the logs an
 >
 > Answer:
 
---- question 22 fill here ---
+We successfully deployed our model using FastAPI and Docker, encapsulating the model within an application. Initially, we conducted local testing to ensure seamless functionality. Upon validation, we proceeded to deploy the model in the cloud, leveraging Google Cloud Run for its scalability and ease of management.
 
 ### Question 23
 
@@ -451,7 +477,7 @@ When running into bugs, we first look at the errors the code gave in the logs an
 >
 > Answer:
 
---- question 23 fill here ---
+We've incorporated two distinct monitoring mechanisms for our deployed model. Within our API, a performance metric has been implemented, offering doctors or real-world users the ability to rectify model predictions if deemed inaccurate. This feedback is then saved and stored in a designated bucket as a .csv file, encompassing not only the model's prediction, the users prediction but also details like the specific model used and attributes assessing data drift, such as feature means. In addition to this, the second monitoring layer involves leveraging telemetry within Google Cloud Run. This system actively tracks key metrics, including the request count, request latencies, container instance count, billable container instance time, container CPU utilization, container memory utilization, sent bytes, recieved bytes, max concurrent requests & container startup latency providing real-time insights into the model's usage and performance.
 
 ### Question 24
 
@@ -465,7 +491,7 @@ When running into bugs, we first look at the errors the code gave in the logs an
 >
 > Answer:
 
---- question 24 fill here ---
+Jonatan used 17$, Kasper used 9.85$, Asger used 2.67$ and Alexander used all 50$ because he created too many VMs and let them sit idle overnight😅. In total 79.5$ was spent during development.
 
 ## Overall discussion of project
 
@@ -486,7 +512,10 @@ When running into bugs, we first look at the errors the code gave in the logs an
 >
 > Answer:
 
---- question 25 fill here ---
+UPDATE THIS
+![this figure](figures/overview.png)
+
+The diagram presents a comprehensive flowchart of the ML software development, starting with the local setup using Cookie Cutter for initial project structure. It proceeds to integrate a visual transformer from Hugging Face's Transformers framework into a PyTorch Lightning module, highlighting PyTorch Lightning's role in managing boilerplate training code. The use of Hydra for configuration file management and WandB for logging training metrics, validation loss, and accuracy is depicted. The workflow incorporates callbacks for model checkpointing, early stopping, and a custom callback for T-SNE plot logging of the latent space before the final classification layer. Additionally, it shows how code pushes to GitHub trigger actions like test runs, code coverage reports to codecov.io, Docker image builds, and uploading to the GCP container registry, culminating in the deployment of the best model using Cloud Run with the latest API container.
 
 ### Question 26
 
@@ -500,7 +529,7 @@ When running into bugs, we first look at the errors the code gave in the logs an
 >
 > Answer:
 
---- question 26 fill here ---
+One of the challenges in the project was getting the docker to run in a container. There was alot of debugging and trying to get it to run without using too much RAM as it had a exit code 137 OOM (OutOfMemoryError). It also took alot of time to test if a small change had fixed the problem, because more often than not the docker had to build all over from scratch, which took a couple of minutes. This was not only true for this one error. Everyone in the group that dealt with a dockerfile had alot of trouble getting it to run correctly. Another big and time consuming struggle was setting up the API. Especially all the HTML code, since none of us had written any HTML before this. Another big problem was getting DVC to work correctly. Not only was it a huge difficulty to get it up and running, but we also kept running into problems later on with it. Google Drive and DVC had some problems working together, so we ended up restarting the whole DVC and Google Drive process. After this we haven't had any major issues with it. A time consuming problem was also getting the unittests to run correctly. It was fairly easy to get running locally. However when pushing to GitHub we encountered problems with the unit tests. After much troubleshooting we discovered that it just was a stupid and simple mistake with a .gitignore file.
 
 ### Question 27
 
@@ -517,4 +546,4 @@ When running into bugs, we first look at the errors the code gave in the logs an
 >
 > Answer:
 
---- question 27 fill here ---
+Student s204231 was in charge of setting up the initial cookie cutter project, github repository, deployment of API and boilerplate code for the ML model. Student s204209 was in charge of getting the training and prediction dockerfiles up and running both locally and in a container so it now runs on GCP. He also set up triggers for the dockers when pushing, the requirements.txt and the Makefile. Student s233472 set up the baseline model, did all the unit tests, CI (set up ruff). He also got DVC up and running and cloud buckets. Student s230368 has set up the majority of the API and got it running with cloud run. He also set up Hydra config files for the models. All members contributed to the initial setup and getting the models up and running.
