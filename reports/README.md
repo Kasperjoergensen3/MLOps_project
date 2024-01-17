@@ -408,7 +408,7 @@ The foundation of our Google Cloud Platform (GCP) infrastructure lies in the Com
 >
 > Answer:
 
-here is a screen shot of different buckets used in the project.
+Here is a screen shot of different buckets used in the project:
 ![Buckets](figures/buckets.png)
 
 1. api_user_inputs: This bucket contains an 'inputs.csv' file, which logs all API user interactions. It records input images, measures, model performance metrics, and timestamps. Additionally, it houses images of performance visualizations and an HTML file linked to the Evidently-generated data drift report. These files are dynamically updated during API interactions, ensuring real-time tracking and analysis of user engagement and model performance.
