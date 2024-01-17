@@ -9,26 +9,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # Build the container image
-      - name: 'gcr.io/cloud-builders/docker'
         run: |
           echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login \
             -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin docker.io
           docker build --f dockerfiles/api.dockerfile -t api:latest 
-      # Push the container image to Container Registry
-      - name: 'gcr.io/cloud-builders/docker'
-        run: |
           docker tag api gcr.io/grounded-camp-410709/api
           docker push gcr.io/grounded-camp-410709/api
-      # Deploy container image to Cloud Run
-      - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-        entrypoint: gcloud
-        args:
-        - 'run'
-        - 'deploy'
-        - 'api'
-        - '--image'
-        - 'gcr.io/grounded-camp-410709/api:latest'
-        - '--region'
-        - 'europe-west1'
+          gcloud run deploy api --image gcr.io/grounded-camp-410709/api --region europe-west1
+
+
+      # # Build the container image
+      # - name: 'gcr.io/cloud-builders/docker'
+      #   run: |
+      #     echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login \
+      #       -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin docker.io
+      #     docker build --f dockerfiles/api.dockerfile -t api:latest 
+      # # Push the container image to Container Registry
+      # - name: 'gcr.io/cloud-builders/docker'
+      #   run: |
+      #     docker tag api gcr.io/grounded-camp-410709/api
+      #     docker push gcr.io/grounded-camp-410709/api
+      # # Deploy container image to Cloud Run
+      # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+      #   entrypoint: gcloud
+      #   args:
+      #   - 'run'
+      #   - 'deploy'
+      #   - 'api'
+      #   - '--image'
+      #   - 'gcr.io/grounded-camp-410709/api:latest'
+      #   - '--region'
+      #   - 'europe-west1'
 #test
