@@ -408,7 +408,13 @@ In our project, we utilized three key services: Engine, Bucket, and Cloud Run, e
 >
 > Answer:
 
---- question 19 fill here ---
+here is a screen shot of different buckets used in the project.
+![Buckets](figures/buckets.png)
+
+1. api_user_inputs: This bucket contains an 'inputs.csv' file, which logs all API user interactions. It records input images, measures, model performance metrics, and timestamps. Additionally, it houses images of performance visualizations and an HTML file linked to the Evidently-generated data drift report. These files are dynamically updated during API interactions, ensuring real-time tracking and analysis of user engagement and model performance.
+2. models_group29: This is a dedicated bucket for storing model checkpoints and their respective configuration files. Model weights are loaded from this bucket, ensuring a streamlined process for retrieving the latest and relevant model data for various tasks, such as training, validation, or deployment.
+3. data_splits_group29: This bucket contains all raw and processed data splits. It is the primary source for our data version control, as we perform 'dvc pull` operations from this container. This approach ensures that everyone working on the project has access to the same data versions, promoting consistency and reproducibility in our data-driven tasks.
+4. the rest is not relevant for this project.
 
 ### Question 20
 
