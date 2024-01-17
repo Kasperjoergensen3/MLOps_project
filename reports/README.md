@@ -328,7 +328,7 @@ In our project, configuration management is orchestrated through two YAML files.
 >
 > Answer:
 
---- question 14 fill here ---
+![Wandb charts](figures/wandb_charts.png)
 
 ### Question 15
 
