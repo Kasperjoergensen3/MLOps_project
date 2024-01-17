@@ -358,7 +358,7 @@ Our project encompasses three essential Docker images, each serving a distinct p
 >
 > Answer:
 
---- question 16 fill here ---
+When running into bugs, we first look at the errors the code gave in the logs and take action accordingly. Sometimes it was a package that wasn't imported or simply a small mistake in the code. If the error was more complex, we used chatGPT and Google to diagnose the error further. There was one instance where running the predict_model docker image in a container locally caused memory isssues. We found this error after looking at the logs, which gave exit code 137 (OutOfMemory). This was then confirmed when using resource monitoring for the container. After fixing the predict_model.dockerfile the memory issue was fixed.
 
 ## Working in the cloud
 
