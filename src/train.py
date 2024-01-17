@@ -2,9 +2,7 @@ from data_generator import CustomDataModule
 from src.models.ViT import ViT
 from pathlib import Path
 import pytorch_lightning as pl
-
 import hydra
-
 from pytorch_lightning.loggers import WandbLogger
 from src.utilities.modules import recursive_find_python_class
 from callbacks.plotting_callback import PlotLogger
@@ -25,9 +23,7 @@ def train(config):
     # init logger
     if config.trainer.wandb:
         run_name = f"{config.model.name}_{config.trainer.optimizer}_{config.trainer.lr}_loss_{config.trainer.loss}"
-        logger = WandbLogger(
-            project="MLOps_project", entity="mlops_team29", name=run_name
-        )
+        logger = WandbLogger(project="MLOps_project", entity="mlops_team29", name=run_name)
     else:
         logger = None
 
@@ -73,4 +69,3 @@ def train(config):
 
 if __name__ == "__main__":
     train()
-

@@ -11,3 +11,4 @@ prometheus-fastapi-instrumentator==1.1.1
 python-multipart==0.0.6
 evidently
 google-cloud-storage
+httpx >= 0.26.0

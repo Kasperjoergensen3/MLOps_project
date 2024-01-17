@@ -57,7 +57,7 @@ end of the project.
 * [x] Fill out the `make_dataset.py` file such that it downloads whatever data you need and
 * [x] Add a model file and a training script and get that running
 * [x] Remember to fill out the `requirements.txt` file with whatever dependencies that you are using
-* [ ] Remember to comply with good coding practices (`pep8`) while doing the project
+* [x] Remember to comply with good coding practices (`pep8`) while doing the project
 * [x] Do a bit of code typing and remember to document essential parts of your code
 * [x] Setup version control for your data or part of your data
 * [x] Construct one or multiple docker files for your code
@@ -148,7 +148,30 @@ Our project relied on the third-party framework called Hugging Face. The decisio
 >
 > Answer:
 
---- question 4 fill here ---
+In our project, we chose Conda as the primary package manager to create and manage a virtual environment tailored for our development needs, ensuring consistency across various setups. Our project's core dependencies were initially generated using pipreqs. However, pipreqs sometimes misses essential packages that are critical for background operations. To counter this, we manually added these packages to the auto-generated list.
+
+To replicate our development environment, a new team member should:
+
+1. Clone the git repository and navigate to the project folder.
+2. Create a new Conda environment and install the requirements using one of the following methods:
+
+Using shell commands:
+```bash
+git clone https://github.com/Kasperjoergensen3/MLOps_project.git
+cd MLOps_project
+conda create --name $(PROJECT_NAME) python=3.11 --no-default-packages -y
+conda activate $(PROJECT_NAME)
+pip install -U pip setuptools wheel
+pip install -r requirements.txt
+pip install -e .
+```
+
+or using make commands
+```bash
+make create_environment
+make requirements
+```
+
 
 ### Question 5
 
@@ -174,7 +197,7 @@ From the cookiecutter template we have filled out the .dvc, .github/workflows, d
 >
 > Answer:
 
---- question 6 fill here ---
+We have used the open source package called Ruff, which is "_An extremely fast Python linter and code formatter, written in Rust_". Ruff enforces a consistent code style, enhancing readability and collaboration for developers. Consistent code also aids automated testing and debugging, ensuring robustness in larger projects. This proactive approach to code quality streamlines development workflows, fosters maintainability, and ultimately contributes to a more efficient and scalable software development process. We have added Ruff to our github workflow to automatically perform formating as well as (attempting to) fix linting errors. See ruff.yml in .github/workflows.
 
 ## Version control
 
@@ -208,7 +231,7 @@ We have run 14 pytest tests, with a primary emphasis on data, SimpleCNN model, a
 >
 > Answer:
 
-Our current code coverage is **X**%. So **X**% is covered by automated tests when pushing to github. While a higher code coverage percentage is generally desirable, achieving 100% coverage doesn't guarantee a completely error-free code. Code coverage primarily measures the proportion of code touched by tests, but it doesn't necessarily account for all possible scenarios and edge cases. Even with close to 100% coverage, there could be subtle bugs, unhandled edge cases, or integration issues that tests might not catch. Comprehensive testing involves not only achieving high coverage but also designing tests that thoroughly explore various code paths and scenarios.
+Our current code coverage is **51**%. So **51**% is covered by automated tests when pushing to github. While a higher code coverage percentage is generally desirable, achieving 100% coverage doesn't guarantee a completely error-free code. Code coverage primarily measures the proportion of code touched by tests, but it doesn't necessarily account for all possible scenarios and edge cases. Even with close to 100% coverage, there could be subtle bugs, unhandled edge cases, or integration issues that tests might not catch. Comprehensive testing involves not only achieving high coverage but also designing tests that thoroughly explore various code paths and scenarios.
 
 ### Question 9
 
@@ -335,7 +358,7 @@ Our project encompasses three essential Docker images, each serving a distinct p
 >
 > Answer:
 
---- question 16 fill here ---
+When running into bugs, we first look at the errors the code gave in the logs and take action accordingly. Sometimes it was a package that wasn't imported or simply a small mistake in the code. If the error was more complex, we used chatGPT and Google to diagnose the error further. There was one instance where running the predict_model docker image in a container locally caused memory isssues. We found this error after looking at the logs, which gave exit code 137 (OutOfMemory). This was then confirmed when using resource monitoring for the container. After fixing the predict_model.dockerfile the memory issue was fixed.
 
 ## Working in the cloud
 
