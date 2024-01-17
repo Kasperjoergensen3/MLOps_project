@@ -21,9 +21,11 @@ from google.cloud import storage
 from src.data.make_dataset import transform_image
 from src.utilities.modules import recursive_find_python_class
 
+
 class ItemEnum(Enum):
     ViT = "ViT"
     SimpleCNN = "SimpleCNN"
+
 
 def load_models():
     models = {}
@@ -93,6 +95,7 @@ start = time()
 models = load_models()
 print("Model loaded in {} seconds".format(time() - start))
 
+
 @app.get("/", response_class=HTMLResponse)
 async def read_index():
     with open("API/app/app.html", "r") as f:
@@ -110,6 +113,7 @@ async def read_drift_report():
         html_content = f.read()
         return HTMLResponse(content=html_content, status_code=200)
 
+
 @app.post("/inference/")
 async def inference(request: Request, background_tasks: BackgroundTasks):
     global counter 
@@ -120,7 +124,7 @@ async def inference(request: Request, background_tasks: BackgroundTasks):
         raise HTTPException(status_code=400, detail="File is not an image.")
     if model_name not in models:
         raise HTTPException(status_code=500, detail="Model not loaded.")
-    
+
     model = models[model_name]
 
     start = time()

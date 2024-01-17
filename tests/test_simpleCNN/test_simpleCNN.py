@@ -1,11 +1,12 @@
 import pytest
 import torch
 from hydra import initialize, compose, initialize_config_dir
-from src.models.SimpleCNN import SimpleCNN 
+from src.models.SimpleCNN import SimpleCNN
 import os
 import hydra
 from tests import _NUM_CLASSES, _NUM_CHANNELS
 from src.data.make_dataset import IMG_SIZE
+
 
 @pytest.fixture(scope="module")
 def simple_cnn_model():
@@ -22,10 +23,15 @@ def simple_cnn_model():
         assert "trainer" in cfg, "Trainer configuration not found in cfg"
 
         # Asserting specific configuration values
-        assert cfg.model.num_classes == _NUM_CLASSES, f"Expected {_NUM_CLASSES} classes in model config, found {cfg.model.num_classes}"
-        assert cfg.model.in_channels == _NUM_CHANNELS, f"Expected {_NUM_CHANNELS} input channel(s) in model config, found {cfg.model.in_channels}"
+        assert (
+            cfg.model.num_classes == _NUM_CLASSES
+        ), f"Expected {_NUM_CLASSES} classes in model config, found {cfg.model.num_classes}"
+        assert (
+            cfg.model.in_channels == _NUM_CHANNELS
+        ), f"Expected {_NUM_CHANNELS} input channel(s) in model config, found {cfg.model.in_channels}"
 
         return SimpleCNN(cfg)
+
 
 def test_init(simple_cnn_model):
     """
@@ -33,16 +39,18 @@ def test_init(simple_cnn_model):
     """
     assert simple_cnn_model is not None, "Model initialization failed, resulting in None"
 
+
 @pytest.fixture
 def sample_batch():
     """
     Pytest fixture to create and return a sample batch of data and labels.
     """
-    input_shape = (1, 1, IMG_SIZE[0], IMG_SIZE[1]) 
+    input_shape = (1, 1, IMG_SIZE[0], IMG_SIZE[1])
     num_classes = _NUM_CHANNELS
     data = torch.rand(input_shape)
     labels = torch.randint(0, num_classes, (input_shape[0],))
     return data, labels
+
 
 def test_training_step(simple_cnn_model, sample_batch):
     """
@@ -52,15 +60,17 @@ def test_training_step(simple_cnn_model, sample_batch):
     loss = simple_cnn_model.training_step((data, labels), batch_idx=0)
     assert loss is not None, "training_step did not compute loss, loss object is None"
 
+
 def test_validation_step(simple_cnn_model, sample_batch):
     """
     Test the validation step of the SimpleCNN model to ensure it calculates loss and accuracy correctly.
     """
     data, labels = sample_batch
     result = simple_cnn_model.validation_step((data, labels), batch_idx=0)
-    assert 'val_loss' in result, "validation_step did not return 'val_loss'"
-    assert 'val_accuracy' in result, "validation_step did not return 'val_accuracy'"
-    assert 0 <= result['val_accuracy'] <= 1, f"Invalid accuracy value: {result['val_accuracy']}"
+    assert "val_loss" in result, "validation_step did not return 'val_loss'"
+    assert "val_accuracy" in result, "validation_step did not return 'val_accuracy'"
+    assert 0 <= result["val_accuracy"] <= 1, f"Invalid accuracy value: {result['val_accuracy']}"
+
 
 def test_forward_pass(simple_cnn_model, sample_batch):
     """
@@ -69,7 +79,7 @@ def test_forward_pass(simple_cnn_model, sample_batch):
     """
     data, _ = sample_batch  # Labels are not needed for forward pass
     output = simple_cnn_model.forward(data)
-    
+
     # Check if output is not None
     assert output is not None, "Forward pass returned None"
 

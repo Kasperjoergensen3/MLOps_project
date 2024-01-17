@@ -3,6 +3,7 @@ from torch import nn, optim
 import pytorch_lightning as pl
 from pathlib import Path
 
+
 class SimpleCNN(pl.LightningModule):
     def __init__(self, config):
         super().__init__()
@@ -11,21 +12,21 @@ class SimpleCNN(pl.LightningModule):
         print(config.model["in_channels"])
         # Define a simple CNN
         self.model = nn.Sequential(
-            nn.Conv2d(config.model['in_channels'], 32, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(config.model["in_channels"], 32, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
             nn.Flatten(),
-            nn.Linear(64 * 56 * 56, 128), 
+            nn.Linear(64 * 56 * 56, 128),
             nn.ReLU(),
-            nn.Linear(128, config.model['num_classes']),
-            nn.LogSoftmax(dim=1)  
+            nn.Linear(128, config.model["num_classes"]),
+            nn.LogSoftmax(dim=1),
         )
 
-        self.criterion = getattr(nn, config.trainer['loss'])()
-        self.optimizer = getattr(optim, config.trainer['optimizer'])
+        self.criterion = getattr(nn, config.trainer["loss"])()
+        self.optimizer = getattr(optim, config.trainer["optimizer"])
 
     def forward(self, x):
         return self.model(x)
@@ -53,9 +54,9 @@ class SimpleCNN(pl.LightningModule):
 
         return {"val_loss": loss, "val_accuracy": accuracy}
 
-
     def configure_optimizers(self):
         return self.optimizer(self.parameters(), lr=self.config.trainer["lr"])
+
 
 if __name__ == "__main__":
     pl.seed_everything(42)

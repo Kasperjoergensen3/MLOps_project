@@ -12,8 +12,8 @@ from matplotlib import pyplot as plt
 DATA_PATH = Path(__file__).resolve().parents[2] / "data"
 IMG_SIZE = (224, 224)
 
-    
-def transform_image(image : Image):
+
+def transform_image(image: Image):
     # Define a transformation to convert the image to tensor
     transform = transforms.ToTensor()
 
@@ -30,7 +30,8 @@ def transform_image(image : Image):
     image_tensor = resize(image_tensor)
     return image_tensor
 
-def build_dataset(mode="train", max_samples_per_class = float("inf")):
+
+def build_dataset(mode="train", max_samples_per_class=float("inf")):
     """
     Build a PyTorch dataset from a given directory.
 
