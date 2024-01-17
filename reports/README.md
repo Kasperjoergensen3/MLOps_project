@@ -546,4 +546,4 @@ The diagram presents a comprehensive flowchart of the ML software development, s
 >
 > Answer:
 
---- question 27 fill here ---
+Student s204231 was in charge of setting up the initial cookie cutter project, github repository, deployment of API and boilerplate code for the ML model. Student s204209 was in charge of getting the training and prediction dockerfiles up and running both locally and in a container so it now runs on GCP. He also set up triggers for the dockers when pushing, the requirements.txt and the Makefile. Student s233472 set up the baseline model, did all the unit tests, CI (set up ruff). He also got DVC up and running and cloud buckets. Student s230368 has set up the majority of the API and got it running with cloud run. He also set up Hydra config files for the models. All members contributed to the initial setup and getting the models up and running.
