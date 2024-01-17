@@ -313,7 +313,9 @@ In our project, configuration management is orchestrated through two YAML files.
 >
 > Answer:
 
---- question 13 fill here ---
+We incorporated config files managed by Hydra and set a random seed to ensure consistency in our experiments. Additionally, we utilized Docker to package our experiments (like training and prediction scripts) into reproducible containers. These containers build a specific virtual machine with designated hardware configurations and guarantee the use of consistent dependencies.
+
+To replicate our experiments, one needs to build the Docker files stored in the Docker folder, where each experiment has its own file. Running these images on their system should ensure full reproducibility of the experiments. For those who prefer not to use Docker, an alternative is to manually replicate the virtual environment (as outlined in question 3) and rerun the training scripts with the specific configurations of the experiment they wish to reproduce. This flexibility allows for consistent and reproducible results, whether using Docker or a manual setup.
 
 ### Question 14
 
