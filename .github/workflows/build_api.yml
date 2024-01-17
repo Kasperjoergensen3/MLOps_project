@@ -1,18 +1,27 @@
-steps:
-# Build the container image
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/grounded-camp-410709/api:latest', '.'] 
-# Push the container image to Container Registry
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/grounded-camp-410709/api:latest']
-# Deploy container image to Cloud Run
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  entrypoint: gcloud
-  args:
-  - 'run'
-  - 'deploy'
-  - '<service-name>'
-  - '--image'
-  - 'gcr.io/grounded-camp-410709/api:latest'
-  - '--region'
-  - '<region>'
+name: API_deployment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Build the container image
+      - name: 'gcr.io/cloud-builders/docker'
+        args: ['build', '-t', 'gcr.io/grounded-camp-410709/api:latest', '.'] 
+      # Push the container image to Container Registry
+      - name: 'gcr.io/cloud-builders/docker'
+        args: ['push', 'gcr.io/grounded-camp-410709/api:latest']
+      # Deploy container image to Cloud Run
+      - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+        entrypoint: gcloud
+        args:
+        - 'run'
+        - 'deploy'
+        - 'api'
+        - '--image'
+        - 'gcr.io/grounded-camp-410709/api:latest'
+        - '--region'
+        - 'europe-west1'
