@@ -156,7 +156,7 @@ To replicate our development environment, a new team member should:
 2. Create a new Conda environment and install the requirements using one of the following methods:
 
 Using shell commands:
-'''bash
+```bash
 git clone https://github.com/Kasperjoergensen3/MLOps_project.git
 cd MLOps_project
 conda create --name $(PROJECT_NAME) python=3.11 --no-default-packages -y
@@ -164,13 +164,13 @@ conda activate $(PROJECT_NAME)
 pip install -U pip setuptools wheel
 pip install -r requirements.txt
 pip install -e .
-'''
+```
 
 or using make commands
-'''bash
+```bash
 make create_environment
 make requirements
-'''
+```
 
 
 ### Question 5
