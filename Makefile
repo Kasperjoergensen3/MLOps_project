@@ -6,7 +6,11 @@
 
 PROJECT_NAME = MLOps_project
 PYTHON_VERSION = 3.11
-PYTHON_INTERPRETER = $(shell command -v python3 || command -v python)
+ifeq ($(OS),Windows_NT)
+    PYTHON_INTERPRETER = python
+else
+    PYTHON_INTERPRETER = $(shell command -v python3 || command -v python)
+endif
 
 #################################################################################
 # COMMANDS                                                                      #
