@@ -197,7 +197,7 @@ From the cookiecutter template we have filled out the .dvc, .github/workflows, d
 >
 > Answer:
 
-We have used the open source package called Ruff, which is "_An extremely fast Python linter and code formatter, written in Rust_". Ruff enforces a consistent code style, enhancing readability and collaboration for developers. Consistent code also aids automated testing and debugging, ensuring robustness in larger projects. This proactive approach to code quality streamlines development workflows, fosters maintainability, and ultimately contributes to a more efficient and scalable software development process.
+We have used the open source package called Ruff, which is "_An extremely fast Python linter and code formatter, written in Rust_". Ruff enforces a consistent code style, enhancing readability and collaboration for developers. Consistent code also aids automated testing and debugging, ensuring robustness in larger projects. This proactive approach to code quality streamlines development workflows, fosters maintainability, and ultimately contributes to a more efficient and scalable software development process. We have added Ruff to our github workflow to automatically perform formating as well as (attempting to) fix linting errors. See ruff.yml in .github/workflows.
 
 ## Version control
 
