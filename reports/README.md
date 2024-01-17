@@ -148,7 +148,30 @@ Our project relied on the third-party framework called Hugging Face. The decisio
 >
 > Answer:
 
---- question 4 fill here ---
+In our project, we chose Conda as the primary package manager to create and manage a virtual environment tailored for our development needs, ensuring consistency across various setups. Our project's core dependencies were initially generated using pipreqs. However, pipreqs sometimes misses essential packages that are critical for background operations. To counter this, we manually added these packages to the auto-generated list.
+
+To replicate our development environment, a new team member should:
+
+1. Clone the git repository and navigate to the project folder.
+2. Create a new Conda environment and install the requirements using one of the following methods:
+
+Using shell commands:
+'''
+git clone https://github.com/Kasperjoergensen3/MLOps_project.git
+cd MLOps_project
+conda create --name $(PROJECT_NAME) python=3.11 --no-default-packages -y
+conda activate $(PROJECT_NAME)
+pip install -U pip setuptools wheel
+pip install -r requirements.txt
+pip install -e .
+'''
+
+or using make commands
+'''
+make create_environment
+make requirements
+'''
+
 
 ### Question 5
 
