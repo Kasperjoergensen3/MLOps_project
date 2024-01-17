@@ -1,4 +1,4 @@
-name: API_deployment
+name: API deployment
 
 on:
   push:
