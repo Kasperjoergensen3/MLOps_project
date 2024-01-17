@@ -329,6 +329,7 @@ In our project, configuration management is orchestrated through two YAML files.
 > Answer:
 
 ![Wandb charts](figures/wandb_charts.png)
+![Wandb T-SNE](figures/T-SNE.png)
 
 ### Question 15
 
