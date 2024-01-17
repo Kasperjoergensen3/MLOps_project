@@ -9,15 +9,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: deploy api
+      - name: login to gcloud service account
         run: |
           gcloud auth activate-service-account --key-file=grounded-camp-410709-eda23609dad5.json
-      # echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login \
-      #   -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin docker.io
-      # docker build -f dockerfiles/api.dockerfile . -t api:latest 
-      # docker tag api gcr.io/grounded-camp-410709/api
-      # docker push gcr.io/grounded-camp-410709/api
-      # gcloud run deploy api --image gcr.io/grounded-camp-410709/api --region europe-west1
+      - name: login to docker hub
+        run: |
+          echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login \
+            -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin docker.io
+      - name: Build the container image
+        run: |
+          docker build -f dockerfiles/api.dockerfile . -t api:latest 
+      - name: Push the container image to Container Registry
+        run: |
+          docker tag api gcr.io/grounded-camp-410709/api
+          docker push gcr.io/grounded-camp-410709/api
+      - name: Deploy container image to Cloud Run
+        run: |
+          gcloud run deploy api --image gcr.io/grounded-camp-410709/api --region europe-west1
 
 
       # # Build the container image
