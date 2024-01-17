@@ -248,7 +248,11 @@ Our current code coverage is **51**%. So **51**% is covered by automated tests w
 >
 > Answer:
 
-We made use of branches one time, when working on the dockerfiles. One pull request was also made to merge to the main branch. Afterwards the branch was deleted. Retrospectively it might have been smarter to just keep the branch, if we wanted to work further with the dockerfiles or something else. Generally branches in version control allow developers to work on features or fixes independently, preventing conflicts. Pull requests provide a mechanism to propose and review changes before merging them into the main codebase. This ensures code quality, collaboration, and easy rollback if needed. Together, branches and pull requests enhance collaboration, streamline development workflows, and maintain a clean and stable version control history.
+In our project, we strategically used branches and pull requests, although our approach wasn't as structured as it could have been. We primarily utilized branches for significant changes or features we anticipated would require multiple iterations. This practice was mainly to prevent the main branch from being cluttered with non-functional commits. Post-implementation, we merged these branches into the main through pull requests and subsequently deleted the branches. The main branch wasn't always kept in a deployable state, which, while manageable within our team, is not a recommended practice in a professional setting and potentially terribly annoying if someone expects main to work. 
+
+Generally branches in version control allow developers to work on features or fixes independently, preventing conflicts. Pull requests provide a mechanism to propose and review changes before merging them into the main codebase. This ensures code quality, collaboration, and easy rollback if needed. Together, branches and pull requests enhance collaboration, streamline development workflows, and maintain a clean and stable version control history.
+
+In retrospect to could have utilized the branches and pull-requests more effectively and in a way that is more aligned with the intended purposes. This could have offered a less messy workflow while potentially preventing bugs etc.
 
 ### Question 10
 
