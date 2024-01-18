@@ -79,11 +79,14 @@ def add_feature_vec_to_DB(now:str, model_name:str, img:torch.Tensor, class_pred:
 
 client = storage.Client(project="mlopsproject")
 data_bucket = client.get_bucket("data_splits_group29")
-blob_data = data_bucket.blob("data/processed/train_features.csv")
+#blob_data = data_bucket.blob("data/processed/train_features.csv")
+blob_data = data_bucket.blob(Path("data").joinpath("processed", "train_features.csv"))
 # data/processed/ make dir if not exists
-Path("data/processed").mkdir(parents=True, exist_ok=True)
-blob_data.download_to_filename("data/processed/train_features.csv")
-train_data = pd.read_csv("data/processed/train_features.csv")
+Path("data").joinpath("processed").mkdir(parents=True, exist_ok=True)
+#blob_data.download_to_filename("data/processed/train_features.csv")
+blob_data.download_to_filename(Path("data").joinpath("processed", "train_features.csv"))
+#train_data = pd.read_csv("data/processed/train_features.csv")
+train_data = pd.read_csv(Path("data").joinpath("processed", "train_features.csv"))
 
 
 def data_drift_func():
@@ -92,8 +95,10 @@ def data_drift_func():
 
     # Download the file
     blob = bucket.blob("input.csv")
-    blob.download_to_filename("API/app/input.csv")
-    inf_data = pd.read_csv("API/app/input.csv")
+    #blob.download_to_filename("API/app/input.csv")
+    blob.download_to_filename(Path("API").joinpath("app", "input.csv"))
+    #inf_data = pd.read_csv("API/app/input.csv")
+    inf_data = pd.read_csv(Path("API").joinpath("app", "input.csv"))
     inf_data.drop(["time"], axis=1, inplace=True)
 
     # Generate report
@@ -101,11 +106,13 @@ def data_drift_func():
         metrics=[DataDriftPreset(), DataQualityPreset(), TargetDriftPreset()]
     )
     report.run(reference_data=train_data, current_data=inf_data)
-    report.save_html("API/app/report.html")
+    #report.save_html("API/app/report.html")
+    report.save_html(Path("API").joinpath("app", "report.html"))
 
     # Upload report to GCP
     blob = bucket.blob("report.html")
-    blob.upload_from_filename("API/app/report.html")
+    #blob.upload_from_filename("API/app/report.html")
+    blob.upload_from_filename(Path("API").joinpath("app", "report.html"))
     return
 
 
@@ -118,7 +125,8 @@ print("Model loaded in {} seconds".format(time() - start))
 
 @app.get("/", response_class=HTMLResponse)
 async def read_index():
-    with open("API/app/app.html", "r") as f:
+    #with open("API/app/app.html", "r") as f:
+    with open(Path("API").joinpath("app", "app.html"), "r") as f:
         return f.read()
 
 
@@ -129,8 +137,9 @@ async def read_drift_report():
 
     # Download the file
     blob = bucket.blob("report.html")
-    blob.download_to_filename("API/app/drift_report.html")
-    with open("API/app/drift_report.html", "r", encoding="utf-8") as f:
+    #blob.download_to_filename("API/app/drift_report.html")
+    blob.download_to_filename(Path("API").joinpath("app", "drift_report.html"))
+    with open(Path("API").joinpath("app", "drift_report.html"), "r", encoding="utf-8") as f:
         html_content = f.read()
         return HTMLResponse(content=html_content, status_code=200)
 
@@ -206,9 +215,11 @@ async def log_button_click(request: Request):
     df = pd.read_csv(MODEL_FILE)
     df.iloc[-1, -1] = button_name
     # Write the modified DataFrame back to the file
-    df.to_csv("API/app/"+MODEL_FILE, index=False)
+    #df.to_csv("API/app/"+MODEL_FILE, index=False)
+    df.to_csv(Path("API").joinpath("app", MODEL_FILE), index=False)
     #Upload file to GCP
-    blob.upload_from_filename("API/app/"+MODEL_FILE)
+    #blob.upload_from_filename("API/app/"+MODEL_FILE)
+    blob.upload_from_filename(Path("API").joinpath("app", MODEL_FILE))
 
     tail_json = df.tail().to_json(orient='records')
     print(tail_json)
