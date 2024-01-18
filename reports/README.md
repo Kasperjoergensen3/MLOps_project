@@ -519,6 +519,8 @@ The diagram provides a detailed flowchart of the ML software development process
 
 Additionally, the flowchart illustrates how code commits to GitHub initiate processes like test executions, generation of code coverage reports to codecov.io, Docker image creation, and uploads to the GCP container registry and contiunes deployment in the cloud. The top part of the chart highlights the use of Google Cloud Platform (GCP) for storing final models and deploying the best models using Cloud Run, along with the latest API container.
 
+The right-hand portion of the diagram illustrates the options available to a user, who can either clone the Git repository and set up their own experiments or interact with the API to perform inferences using the provided models. 
+
 ### Question 26
 
 > **Discuss the overall struggles of the project. Where did you spend most time and what did you do to overcome these**
