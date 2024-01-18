@@ -464,7 +464,7 @@ here is a screen shot of the container registry for this project.
 >
 > Answer:
 
-We successfully deployed our model using FastAPI and Docker, encapsulating the model within an application. Initially, we conducted local testing to ensure seamless functionality. Upon validation, we proceeded to deploy the model in the cloud, leveraging Google Cloud Run for its scalability and ease of management. To utilize the service, a user simply needs to visit this URL, preferably using a Chrome browser. Here, they will find a straightforward and intuitive interface, where users can select files from their file system. The system is designed primarily for use via this user interface rather than the command line. However, command line commands are possible, though not recommended, and can be found at the /docs endpoint.
+We successfully deployed our model using FastAPI and Docker, encapsulating the model within an application. Initially, we conducted local testing to ensure seamless functionality. Upon validation, we proceeded to deploy the model in the cloud, leveraging Google Cloud Run for its scalability and ease of management. To utilize the service, a user simply needs to visit this [link](https://api-qz5jpoqf4q-ew.a.run.app) (can take a coulpe of minutes to start up), preferably using a Chrome browser. Here, they will find a straightforward and intuitive interface, where users can select files from their file system. The system is designed primarily for use via this user interface rather than the command line. However, command line commands are possible, though not recommended, and can be found at the /docs endpoint.
 
 ### Question 23
 
