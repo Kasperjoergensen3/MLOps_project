@@ -15,17 +15,20 @@ jobs:
             -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin docker.io
       - name: Build the container image
         run: |
-          docker build -f dockerfiles/api.dockerfile . -t api:latest 
+          docker build -f dockerfiles/empty.dockerfile . -t api:latest 
       - name: login to gcloud service account
         run: |
-          gcloud auth activate-service-account --key-file=grounded-camp-410709-815bb427112e.json
+          echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode > /tmp/sa.json
+          gcloud auth activate-service-account --key-file=/tmp/sa.json
           gcloud config set project grounded-camp-410709  
           gcloud auth configure-docker
       - name: Push the container image to Container Registry
         run: |
-          docker tag api gcr.io/grounded-camp-410709/api
-          docker push gcr.io/grounded-camp-410709/api
+          echo hello
+        # docker tag api gcr.io/grounded-camp-410709/api
+        # docker push gcr.io/grounded-camp-410709/api
       - name: Deploy container image to Cloud Run
         run: |
-          gcloud run deploy api --image gcr.io/grounded-camp-410709/api:latest --region europe-west1 --platform managed --allow-unauthenticated --port 80 --memory 8Gi --cpu 2 --max-instances 2
+          echo world
+        # gcloud run deploy api --image gcr.io/grounded-camp-410709/api:latest --region europe-west1 --platform managed --allow-unauthenticated --port 80 --memory 8Gi --cpu 2 --max-instances 2
 
