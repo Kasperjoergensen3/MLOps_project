@@ -60,7 +60,12 @@ class ViT(pl.LightningModule):
         return {"val_loss": loss, "val_accuracy": accuracy}
 
     def configure_optimizers(self):
-        return self.optimizer(self.parameters(), lr=self.config.trainer["lr"])
+        if self.config.trainer["optimizer"] == "SGD":
+            return self.optimizer(
+                self.parameters(), lr=self.config.trainer["lr"], momentum=0.9
+            )
+        else:
+            return self.optimizer(self.parameters(), lr=self.config.trainer["lr"])
 
 
 if __name__ == "__main__":
