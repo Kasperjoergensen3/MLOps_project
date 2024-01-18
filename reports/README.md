@@ -512,10 +512,12 @@ Jonatan used 17$, Kasper used 9.85$, Asger used 2.67$ and Alexander used all 50$
 >
 > Answer:
 
-UPDATE THIS
+
 ![this figure](figures/overview.png)
 
-The diagram presents a comprehensive flowchart of the ML software development, starting with the local setup using Cookie Cutter for initial project structure. It proceeds to integrate a visual transformer from Hugging Face's Transformers framework into a PyTorch Lightning module, highlighting PyTorch Lightning's role in managing boilerplate training code. The use of Hydra for configuration file management and WandB for logging training metrics, validation loss, and accuracy is depicted. The workflow incorporates callbacks for model checkpointing, early stopping, and a custom callback for T-SNE plot logging of the latent space before the final classification layer. Additionally, it shows how code pushes to GitHub trigger actions like test runs, code coverage reports to codecov.io, Docker image builds, and uploading to the GCP container registry, culminating in the deployment of the best model using Cloud Run with the latest API container.
+The diagram provides a detailed flowchart of the ML software development process, beginning with the initial project setup through Cookie Cutter. This setup is followed by the integration of a visual transformer from Hugging Face's Transformers framework into a PyTorch Lightning module. The diagram emphasizes PyTorch Lightning's function in handling standard training code. It also depicts the utilization of Hydra for configuration file management and WandB for logging training metrics, validation loss, and accuracy. PyTorch Lightning further integrates callbacks for model checkpointing, early stopping, and a custom callback for logging T-SNE plots of the latent space to WandB before the final classification layer.
+
+Additionally, the flowchart illustrates how code commits to GitHub initiate processes like test executions, generation of code coverage reports to codecov.io, Docker image creation, and uploads to the GCP container registry and contiunes deployment in the cloud. The top part of the chart highlights the use of Google Cloud Platform (GCP) for storing final models and deploying the best models using Cloud Run, along with the latest API container.
 
 ### Question 26
 
