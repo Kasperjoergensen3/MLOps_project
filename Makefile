@@ -63,8 +63,9 @@ predict:
 	$(PYTHON_INTERPRETER) src/predict_model.py --output_dir=$(output_dir) --checkpoint=$(checkpoint)
 
 
+sweep_name = "my-aswesome-sweep"
 sweep:
-	$(PYTHON_INTERPRETER) src/sweep.py
+	$(PYTHON_INTERPRETER) src/sweep.py name=$(sweep_name)
 
 
 #################################################################################
