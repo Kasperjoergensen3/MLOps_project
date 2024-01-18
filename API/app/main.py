@@ -37,7 +37,7 @@ def load_models():
     client = storage.Client(project="mlopsproject")
     bucket = client.get_bucket(BUCKET_NAME)
     for model_name in ItemEnum:
-        model_path = Path("models/test_predict/{}".format(model_name.value))
+        model_path = Path("models").joinpath('test_predict', model_name.value)
         config_path = model_path.joinpath("hydra", "config.yaml")
         checkpoint_path = model_path.joinpath("checkpoints", "best-checkpoint.ckpt")
         blob = bucket.blob(str(config_path))
