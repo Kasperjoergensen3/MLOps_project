@@ -49,12 +49,17 @@ visualize:
 	$(PYTHON_INTERPRETER) src/visualizations/visualize.py
 
 
-trainer = "trainer"
-model = "ViT"
-quick_test = "True"
+trainer = trainer
+model = ViT
+quick_test = True
 
 train:
 	$(PYTHON_INTERPRETER) src/train.py model=$(model) trainer=$(trainer) trainer.quick_test=$(quick_test)
+
+
+train_profile:
+	$(PYTHON_INTERPRETER) -m cProfile -o models/test_predict/$(model)/profile.prof -s tottime \
+	src/train.py model=$(model) trainer=$(trainer) trainer.quick_test=$(quick_test)
 
 
 output_dir = "models/test_predict/"
