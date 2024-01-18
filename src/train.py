@@ -12,7 +12,7 @@ from callbacks.plotting_callback import PlotLogger
 def train(config):
     # init datamodule
     if config.trainer.quick_test:
-        config.trainer.max_epochs = 5
+        config.trainer.max_epochs = 2
 
     dm = CustomDataModule(config)
 
