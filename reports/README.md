@@ -359,7 +359,7 @@ The first image reveals four plots showing training loss, validation loss, epoch
 >
 > Answer:
 
-Our project encompasses three essential Docker images, each serving a distinct purpose in our machine learning pipeline. The first image is dedicated to training the model, while the second facilitates predictions using the trained model from a specified checkpoint. The third image serves as an API container, seamlessly integrating with Google Cloud. For instance, executing the training Docker image involves a simple terminal command: 'docker run trainer:latest.' The beauty of this approach lies in the utilization of Hydra to load hyperparameters dynamically. To delve deeper into the intricacies of these Docker images, navigate to the 'dockerfiles' directory. There, you'll find detailed explanations for each image in the form of 'api.dockerfile,' 'predict_model.dockerfile,' and 'train_model.dockerfile.' $\textbf{Insert link to Dockerfile!}$
+Our project encompasses three essential Docker images, each serving a distinct purpose in our machine learning pipeline. The first image is dedicated to training the model, while the second facilitates predictions using the trained model from a specified checkpoint. The third image serves as an API container, seamlessly integrating with Google Cloud. To build the train_model.dockerfile locally simply run '_docker build -f train_model.dockerfile . -t trainer:latest_'. Then to execute the training Docker image run the simple terminal command: '_docker run trainer:latest_'. The beauty of this approach lies in the utilization of Hydra to load hyperparameters dynamically. To delve deeper into the intricacies of these Docker images, navigate to the 'dockerfiles' directory. There, you'll find detailed explanations for each image in the form of 'api.dockerfile,' 'predict_model.dockerfile,' and 'train_model.dockerfile.'
 
 ### Question 16
 
@@ -375,6 +375,8 @@ Our project encompasses three essential Docker images, each serving a distinct p
 > Answer:
 
 When running into bugs, we first look at the errors the code gave in the logs and take action accordingly. Sometimes it was a package that wasn't imported or simply a small mistake in the code. If the error was more complex, we used chatGPT and Google to diagnose the error further. There was one instance where running the predict_model docker image in a container locally caused memory isssues. We found this error after looking at the logs, which gave exit code 137 (OutOfMemory). This was then confirmed when using resource monitoring for the container. After fixing the predict_model.dockerfile the memory issue was fixed.
+
+In the makefile we included a train_profile call that does profiling of the training script with ´cProfile´ and saves is a ´.prof´ file. We did a single profiling of the training of each model and did not find anything concerning. The training is set up in torch lightning which should be optimized. To further optimize we could have investigated whether or not distributed dataloading would speed things up, but we did not pursue this due to time limitations. 
 
 ## Working in the cloud
 
