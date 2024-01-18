@@ -16,7 +16,7 @@ from callbacks.plotting_callback import PlotLogger
 def train(config):
     # Check if the script is run as part of a W&B sweep
     if 'WANDB_SWEEP_ID' in os.environ:
-        wandb_run = wandb.init()
+        wandb.init()
         sweep_config = wandb.config
         # Manually update the Hydra config with the W&B parameters
         for key, val in sweep_config.items():

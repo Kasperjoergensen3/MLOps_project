@@ -1,10 +1,10 @@
 # @ trainer
 data_path: "../../../data/processed"
-lr: 0.001
+lr: 0.0001
 max_epochs: 5
 batch_size: 32
 loss: "NLLLoss"
-optimizer: "SGD"
+optimizer: "Adam"
 wandb: True
 checkpoint_callback: True
 early_stopping_callback: True
