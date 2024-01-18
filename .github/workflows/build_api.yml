@@ -26,5 +26,5 @@
 #           docker push gcr.io/grounded-camp-410709/api
 #       - name: Deploy container image to Cloud Run
 #         run: |
-#           gcloud run deploy api --image gcr.io/grounded-camp-410709/api:latest --region europe-west1
+#           gcloud run deploy api --image gcr.io/grounded-camp-410709/api:latest --region europe-west1 --platform managed --allow-unauthenticated
 
