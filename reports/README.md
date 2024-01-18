@@ -343,8 +343,8 @@ To replicate our experiments, one needs to build the Docker files stored in the 
 > Answer:
 
 The first image reveals four plots showing training loss, validation loss, epochs and validations accuarcy. The first graph charts training loss against optimization steps, where a general decline is observed, aligning with expectations. The second plot showcases the validation loss for both ViT and SimpleCNN models across numerous runs, assessing unseen validation data. Most models exhibit a declining validation loss per step, which is to be expected. The third plot illustrates epochs in relation to steps. Lastly, the fourth plot depicts validation accuracy as a function of steps. Here we see that the validation accuracy follows a general increase per step looking over time. This is what we hoped for. However some of the models increase and then decrease and other decrease and then increase in validation accuracy, such that in the end they have the same validation accuracy. This is rather peculiar and we don't know what might cause this.  The second image is a single T-SNE (t-Distributed Stochastic Neighbor Embedding) plot. T-SNE is smart since it is a visualization technique used to represent high-dimensional data in a lower-dimensional space, which is perfect for us. In the plot one can see 4 different colors being plotted (blue, light blue, yellow and brown), which correspond to the 4 different types of brain tumors we are trying to classify (where one of them is no tumor). Here we see that the T-SNE plot splits up the 4 classes quite well, which indicates that our model has a good latent space. So the T-SNE plot is used to check if the latent space is good, which in turn affects how good our model is going to be.
-![Wandb plot1](figures/Train_val loss.png)
-![Wandb plot2](figures/Val acc.png)
+![Wandb plot1](figures/Train_val_loss.png)
+![Wandb plot2](figures/Val_acc.png)
 ![Wandb T-SNE](figures/T-SNE.png)
 
 ### Question 15
