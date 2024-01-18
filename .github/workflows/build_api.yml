@@ -25,10 +25,10 @@ jobs:
       - name: Push the container image to Container Registry
         run: |
           echo hello
-        # docker tag api gcr.io/grounded-camp-410709/api
-        # docker push gcr.io/grounded-camp-410709/api
+        docker tag api gcr.io/grounded-camp-410709/api
+        docker push gcr.io/grounded-camp-410709/api
       - name: Deploy container image to Cloud Run
         run: |
           echo world
-        # gcloud run deploy api --image gcr.io/grounded-camp-410709/api:latest --region europe-west1 --platform managed --allow-unauthenticated --port 80 --memory 8Gi --cpu 2 --max-instances 2
+        gcloud run deploy api --image gcr.io/grounded-camp-410709/api:latest --region europe-west1 --platform managed --allow-unauthenticated --port 80 --memory 8Gi --cpu 2 --max-instances 2
 
