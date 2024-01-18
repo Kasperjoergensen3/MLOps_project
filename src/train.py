@@ -62,6 +62,7 @@ def train(config):
         max_epochs=config.trainer.max_epochs,
         logger=logger,
         callbacks=callbacks,
+        log_every_n_steps=10,
     )
 
     trainer.fit(model, dm)
