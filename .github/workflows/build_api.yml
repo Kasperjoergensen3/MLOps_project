@@ -15,7 +15,7 @@ jobs:
             -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin docker.io
       - name: Build the container image
         run: |
-          docker build -f dockerfiles/empty.dockerfile . -t api:latest 
+          docker build -f dockerfiles/api.dockerfile . -t api:latest 
       - name: login to gcloud service account
         run: |
           gcloud auth activate-service-account --key-file=grounded-camp-410709-815bb427112e.json
