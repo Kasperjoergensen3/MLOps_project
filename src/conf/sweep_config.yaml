@@ -1,14 +1,19 @@
 # sweep_config.yaml
-name: my-awesome-sweep
+program: train.py 
+name: my-awesome-sweep3
 method: grid
 metric:
   name: val_loss
   goal: minimize
 parameters:
-  lr:
-    values: [0.001, 0.0001]
-  optimizer:
-    values: ["adam"]
+    lr:
+      values: [0.01, 0.001, 0.0001]
+    optimizer:
+      values: ["Adam", "SGD"]
+    batch_size:
+      values: [64]
+    name:
+      values: ["SimpleCNN"]
 ### Add this to run on full dataset
-  #quick_test:
-  #  values: [False]
+    #quick_test:
+    #  values: [False]

@@ -1,18 +1,33 @@
+import os
+
 from data_generator import CustomDataModule
 from src.models.ViT import ViT
 from pathlib import Path
 import pytorch_lightning as pl
 import hydra
+import wandb
+from omegaconf import OmegaConf
 from pytorch_lightning.loggers import WandbLogger
+
 from src.utilities.modules import recursive_find_python_class
 from callbacks.plotting_callback import PlotLogger
 
-
 @hydra.main(config_path="conf", config_name="default_config.yaml")
 def train(config):
+    # Check if the script is run as part of a W&B sweep
+    if 'WANDB_SWEEP_ID' in os.environ:
+        wandb_run = wandb.init()
+        sweep_config = wandb.config
+        # Manually update the Hydra config with the W&B parameters
+        for key, val in sweep_config.items():
+            if hasattr(config.trainer, key):
+                config.trainer[key] = sweep_config[key]
+            elif hasattr(config.model, key):
+                config.model[key] = sweep_config[key]
+
     # init datamodule
     if config.trainer.quick_test:
-        config.trainer.max_epochs = 2
+        config.trainer.max_epochs = 5
 
     dm = CustomDataModule(config)
 
