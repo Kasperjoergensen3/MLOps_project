@@ -376,6 +376,8 @@ Our project encompasses three essential Docker images, each serving a distinct p
 
 When running into bugs, we first look at the errors the code gave in the logs and take action accordingly. Sometimes it was a package that wasn't imported or simply a small mistake in the code. If the error was more complex, we used chatGPT and Google to diagnose the error further. There was one instance where running the predict_model docker image in a container locally caused memory isssues. We found this error after looking at the logs, which gave exit code 137 (OutOfMemory). This was then confirmed when using resource monitoring for the container. After fixing the predict_model.dockerfile the memory issue was fixed.
 
+In the makefile we included a train_profile call that does profiling of the training script with ´cProfile´ and saves is a ´.prof´ file. We did a single profiling of the training of each model and did not find anything concerning. The training is set up in torch lightning which should be optimized. To further optimize we could have investigated whether or not distributed dataloading would speed things up, but we did not pursue this due to time limitations. 
+
 ## Working in the cloud
 
 > In the following section we would like to know more about your experience when developing in the cloud.
