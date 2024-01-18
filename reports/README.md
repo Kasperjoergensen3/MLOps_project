@@ -252,7 +252,7 @@ In our project, we strategically used branches and pull requests, although our a
 
 Generally branches in version control allow developers to work on features or fixes independently, preventing conflicts. Pull requests provide a mechanism to propose and review changes before merging them into the main codebase. This ensures code quality, collaboration, and easy rollback if needed. Together, branches and pull requests enhance collaboration, streamline development workflows, and maintain a clean and stable version control history.
 
-In retrospect to could have utilized the branches and pull-requests more effectively and in a way that is more aligned with the intended purposes. This could have offered a less messy workflow while potentially preventing bugs etc.
+In retrospect we could have utilized the branches and pull-requests more effectively and in a way that is more aligned with the intended purposes. This could have offered a less messy workflow while potentially preventing bugs etc.
 
 ### Question 10
 
@@ -289,7 +289,7 @@ For unit testing, we use the test.yml workflow. This is triggered on pushes and 
 
 The ruff.yml workflow performs formatting with ruff as well as ruff with --fix which attempts to resolve linting issues automatically (eg. removing unused imports). Like our testing workflow, it runs on pushes and pull requests to our main branches and uses caching to improve performance.
 
-Finally, we have the build-docker-image.yml workflow for Docker. This builds and pushes Docker images to Docker Hub on pushes to the main branch. This step ensures our application is always ready for deployment in a containerized environment.
+Finally, we have the build-docker-image.yml workflow for Docker. This builds our Docker images and notifies us if an error occurs. This step ensures our application is always ready for deployment in a containerized environment.
 
 ## Running code and tracking experiments
 
