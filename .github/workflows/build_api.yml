@@ -20,6 +20,7 @@ jobs:
         run: |
           gcloud auth activate-service-account --key-file=grounded-camp-410709-815bb427112e.json
           gcloud config set project grounded-camp-410709  
+          gcloud auth configure-docker
       - name: Push the container image to Container Registry
         run: |
           docker tag api gcr.io/grounded-camp-410709/api
