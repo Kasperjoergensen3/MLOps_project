@@ -1,37 +1,37 @@
-# name: API deployment
+name: API deployment
 
-# on:
-#   push:
-#     branches: [ main ]
-#     paths:
-#       - 'API/**'
-#       - 'dockerfiles/api.dockerfile'
-#       - 'requirements.txt'
-#       - 'src/models/**'
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'API/**'
+      - 'dockerfiles/api.dockerfile'
+      - 'requirements.txt'
+      - 'src/models/**'
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: login to docker hub
-#         run: |
-#           echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login \
-#             -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin docker.io
-#       - name: Build the container image
-#         run: |
-#           docker build -f dockerfiles/api.dockerfile . -t api:latest 
-#       - name: login to gcloud service account
-#         run: |
-#           echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode > /tmp/sa.json
-#           gcloud auth activate-service-account --key-file=/tmp/sa.json
-#           gcloud config set project grounded-camp-410709  
-#           gcloud auth configure-docker
-#       - name: Push the container image to Container Registry
-#         run: |
-#           docker tag api gcr.io/grounded-camp-410709/api
-#           docker push gcr.io/grounded-camp-410709/api
-#       - name: Deploy container image to Cloud Run
-#         run: |
-#           gcloud run deploy api --image gcr.io/grounded-camp-410709/api:latest --region europe-west1 --platform managed --allow-unauthenticated --port 80 --memory 8Gi --cpu 2 --max-instances 2
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: login to docker hub
+        run: |
+          echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login \
+            -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin docker.io
+      - name: Build the container image
+        run: |
+          docker build -f dockerfiles/api.dockerfile . -t api:latest 
+      - name: login to gcloud service account
+        run: |
+          echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode > /tmp/sa.json
+          gcloud auth activate-service-account --key-file=/tmp/sa.json
+          gcloud config set project grounded-camp-410709  
+          gcloud auth configure-docker
+      - name: Push the container image to Container Registry
+        run: |
+          docker tag api gcr.io/grounded-camp-410709/api
+          docker push gcr.io/grounded-camp-410709/api
+      - name: Deploy container image to Cloud Run
+        run: |
+          gcloud run deploy api --image gcr.io/grounded-camp-410709/api:latest --region europe-west1 --platform managed --allow-unauthenticated --port 80 --memory 8Gi --cpu 2 --max-instances 2
 
