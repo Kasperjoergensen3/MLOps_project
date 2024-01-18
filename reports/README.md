@@ -435,7 +435,7 @@ Here is a screen shot of different buckets used in the project:
 >
 > Answer:
 
-here is a screen shot of the container registry for this project.
+Here is a screen shot of the container registry for this project:
 ![Buckets](figures/containers.png)
 
 1. api: contains different different packed versions of the API.
