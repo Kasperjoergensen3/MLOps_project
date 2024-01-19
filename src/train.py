@@ -29,6 +29,9 @@ def train(config):
     if config.trainer.quick_test:
         config.trainer.max_epochs = 5
 
+    #Set seed
+    pl.seed_everything(config.trainer.seed, workers=True)
+
     dm = CustomDataModule(config)
 
     # init model
@@ -78,6 +81,7 @@ def train(config):
         logger=logger,
         callbacks=callbacks,
         log_every_n_steps=10,
+        deterministic=True,
     )
 
     trainer.fit(model, dm)

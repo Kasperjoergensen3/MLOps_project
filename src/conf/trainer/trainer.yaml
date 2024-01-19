@@ -10,4 +10,5 @@ checkpoint_callback: True
 early_stopping_callback: True
 plotting_callback: True
 quick_test: True
+seed: 42
 
