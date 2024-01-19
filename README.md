@@ -31,10 +31,6 @@ dvc pull
 ### Models
 We intend to perform an image classification task on the MRI brain images data using transformers. The models we will use from the Transformers framework are yet to be determined but possible options are BEiT, Conditional DETR and Swin Transformer.
 
-### Project flowchart
-
-!!Insert nice image of the operations-flowchart of our project!!
-
 ## Project structure
 
 The directory structure of the project looks like this:
